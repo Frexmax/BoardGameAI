@@ -1,8 +1,15 @@
-from TrainerActorCritic import TrainerActorCritic
-from TrainerActorCriticV2 import TrainerActorCriticV2
-from Connect4EnvParameters import board_parameters, draw_parameters
-from connect4_parameters import actor_critic_trainer_parameters, actor_critic_parameters, \
-    actor_critic_trainer_parametersV2
+import path
+import sys
+
+sys.path.append(path.Path("trainer").absolute())
+
+from trainer.trainer_actor_critic import TrainerActorCritic
+from trainer.trainer_actor_critic_v2 import TrainerActorCriticV2
+
+from connect4_env.env_parameters.connect4_env_parameters import board_parameters, draw_parameters
+from connect4_parameters.connect4_parameters import (actor_critic_trainer_parameters,
+                                                     actor_critic_parameters, actor_critic_trainer_parametersV2)
+
 
 TRAINING_MODE = "ITERATION"
 if __name__ == '__main__':

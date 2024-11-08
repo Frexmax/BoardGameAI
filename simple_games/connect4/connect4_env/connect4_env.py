@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from Connect4Board import Board
+from env_parts.connect4_board import Board
 from numba import jit
 
 

@@ -1,5 +1,5 @@
 import tensorflow as tf
-from keras.layers import Input, Conv2D, BatchNormalization, Flatten, Dense
+from keras.src.layers import Input, Conv2D, BatchNormalization, Flatten, Dense
 
 
 def build_shared_model_simple(input_shape, output_shape, num_kernels, creg, dreg):

@@ -1,11 +1,16 @@
+import path
+import sys
+
+sys.path.append(path.Path("trainer").absolute())
+
 import time
 import random
 import pygame as pg
-from SelfPlayModel import SelfPlayModel
-from tic_tac_toe_env import TicTacToeEnv
-from MonteCarloTreeSearch import MonteCarloTreeSearch
-from TicTacToeEnvParameters import board_parameters, draw_parameters
 
+from tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from trainer.self_play_model.self_play_model import SelfPlayModel
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
+from tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
 
 HUMAN = True
 EPISODES = 5

@@ -1,6 +1,6 @@
 import numpy as np
 from copy import deepcopy
-from TicTacToeBoard import Board
+from env_parts.tic_tac_toe_board import Board
 
 
 class TicTacToeEnv:

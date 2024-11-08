@@ -1,7 +1,7 @@
 import numpy as np
 import pygame as pg
 import warnings
-from TicTacToeDrawer import Drawer
+from tic_tac_toe_drawer import Drawer
 
 
 class Board:

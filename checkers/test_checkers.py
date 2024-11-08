@@ -10,7 +10,7 @@ import random
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 from checkers_env.checkers_env import CheckersEnv
-from checkers_env.env_parts.env_parameters import board_parameters, draw_parameters
+from checkers_env.env_parameters.checkers_env_parameters import board_parameters, draw_parameters
 from pygame.locals import KEYDOWN, K_ESCAPE
 
 HUMAN = True
