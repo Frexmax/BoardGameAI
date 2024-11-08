@@ -1,5 +1,6 @@
 import numpy as np
-from Score import ucb_score
+
+from trainer.monte_carlo_tree_search.score.score import ucb_score
 
 
 class Node:

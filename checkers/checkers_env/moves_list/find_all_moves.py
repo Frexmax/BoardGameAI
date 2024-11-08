@@ -602,8 +602,8 @@ print(len(captures))
 moves = tuple(moves)
 captures = tuple(captures)
 
-with open("MovesList.pkl", "wb") as f:
+with open("moves_list.pkl", "wb") as f:
     pickle.dump(moves, f)
 
-with open("CapturesList.pkl", "wb") as f:
+with open("captures_list.pkl", "wb") as f:
     pickle.dump(captures, f)

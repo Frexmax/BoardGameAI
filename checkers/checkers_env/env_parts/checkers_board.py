@@ -1,7 +1,9 @@
-import pygame as pg
-import numpy as np
 import warnings
-from checkers_drawer import Drawer
+
+import numpy as np
+import pygame as pg
+
+from checkers.checkers_env.env_parts.checkers_drawer import Drawer
 
 
 class Board:

@@ -1,8 +1,3 @@
-import path
-import sys
-
-sys.path.append(path.Path("trainer").absolute())
-
 from trainer.trainer_actor_critic import TrainerActorCritic
 from trainer.trainer_actor_critic_v2 import TrainerActorCriticV2
 

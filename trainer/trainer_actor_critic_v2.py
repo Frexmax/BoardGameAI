@@ -1,16 +1,17 @@
 import gc
 import pickle
 from multiprocessing import Pool
-from ActorCritic import ActorCritic
 
-from logger import logger
-from tournament import tournament_pair
-from UniformBufferActorCritic import UniformBufferActorCritic
-from TicTacToeEnv import TicTacToeEnv
-from Connect4Env import Connect4Env
-from CheckersEnv import CheckersEnv
-from TestGames import play_test_game_pair
-from data_generator import generate_data
+
+from checkers.checkers_env.checkers_env import CheckersEnv
+from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from simple_games.connect4.connect4_env.connect4_env import Connect4Env
+from trainer.tournament.tournament import tournament_pair
+from trainer.algorithms.actor_critic.actor_critic import ActorCritic
+from trainer.buffers.uniform_buffer_actor_critic import UniformBufferActorCritic
+from trainer.test.test_games import play_test_game_pair
+from trainer.data_generator.data_generator import generate_data
+from trainer.logger.logger import Logger
 
 
 class TrainerActorCriticV2:

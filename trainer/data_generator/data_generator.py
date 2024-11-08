@@ -1,12 +1,13 @@
-import time
-import tensorflow as tf
 import os
+
+import tensorflow as tf
 import numpy as np
-from MonteCarloTreeSearch import MonteCarloTreeSearch
-from TicTacToeEnv import TicTacToeEnv
-from Connect4Env import Connect4Env
-from CheckersEnv import CheckersEnv
-from SelfPlayModel import SelfPlayModel
+
+from checkers.checkers_env.checkers_env import CheckersEnv
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
+from trainer.self_play_model.self_play_model import SelfPlayModel
+from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from simple_games.connect4.connect4_env.connect4_env import Connect4Env
 
 
 def filter_actions(root, env):

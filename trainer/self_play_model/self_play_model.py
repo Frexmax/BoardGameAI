@@ -4,8 +4,9 @@ os.environ["CUDA_VISIBLE_DEVICES"] = ""
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = 'true'
 
 from tensorflow import device
-from tensorflow.keras.models import load_model
-from ActorCriticTrainers import predict
+from tensorflow.keras.saving import load_model
+
+from trainer.algorithms.actor_critic.actor_critic_trainers import predict
 
 
 class SelfPlayModel:

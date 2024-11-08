@@ -1,16 +1,11 @@
-import path
-import sys
-
-sys.path.append(path.Path("trainer").absolute())
-
 import time
 import random
 import pygame as pg
 
-from trainer.self_play_model.self_play_model import SelfPlayModel
 from connect4_env.connect4_env import Connect4Env
-from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 from connect4_env.env_parameters.connect4_env_parameters import board_parameters, draw_parameters
+from trainer.self_play_model.self_play_model import SelfPlayModel
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 
 HUMAN = True
 EPISODES = 5

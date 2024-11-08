@@ -1,8 +1,3 @@
-import path
-import sys
-
-sys.path.append(path.Path("trainer").absolute())
-
 import time
 import random
 import pygame as pg

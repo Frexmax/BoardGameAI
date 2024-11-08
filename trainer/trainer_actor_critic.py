@@ -1,13 +1,15 @@
 import random
+
 import numpy as np
-from ActorCritic import ActorCritic
-from logger import logger
-from tournament import tournament
-from UniformBufferActorCritic import UniformBufferActorCritic
-from TicTacToeEnv import TicTacToeEnv
-from Connect4Env import Connect4Env
-from CheckersEnv import CheckersEnv
-from monte_carlo_tree_search import monte_carlo_tree_search
+
+from checkers.checkers_env.checkers_env import CheckersEnv
+from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from simple_games.connect4.connect4_env.connect4_env import Connect4Env
+from trainer.algorithms.actor_critic.actor_critic import ActorCritic
+from trainer.tournament.tournament import tournament
+from trainer.buffers.uniform_buffer_actor_critic import UniformBufferActorCritic
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
+from trainer.logger.logger import Logger
 
 
 class TrainerActorCritic:

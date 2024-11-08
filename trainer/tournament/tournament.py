@@ -1,10 +1,11 @@
 import os
 import tensorflow as tf
-from TicTacToeEnv import TicTacToeEnv
-from Connect4Env import Connect4Env
-from CheckersEnv import CheckersEnv
-from MonteCarloTreeSearch import MonteCarloTreeSearch
-from SelfPlayModel import SelfPlayModel
+
+from checkers.checkers_env.checkers_env import CheckersEnv
+from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from simple_games.connect4.connect4_env.connect4_env import Connect4Env
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
+from trainer.self_play_model.self_play_model import SelfPlayModel
 
 
 def tournament_pair(env_name, board_parameters, draw_parameters, num_simulations, heuristic_weight):

@@ -1,16 +1,18 @@
-import numpy as np
 import pickle
+
+import numpy as np
 from numba import jit
-from env_parts.checkers_board import Board
-from env_parts.move_finder import MoveFinder
+
+from checkers.checkers_env.env_parts.checkers_board import Board
+from checkers.checkers_env.env_parts.move_finder import MoveFinder
 
 
 class CheckersEnv:
     def __init__(self, board_parameters, draw_parameters, to_render=False):
-        with open('checkers_env\MovesList\CapturesList.pkl', 'rb') as f:
+        with open('checkers_env/moves_list/captures_list.pkl', 'rb') as f:
             self.captures_list = pickle.load(f)
 
-        with open('checkers_env\MovesList\MovesList.pkl', 'rb') as f:
+        with open('checkers_env/moves_list/moves_list.pkl', 'rb') as f:
             self.moves_list = pickle.load(f)
 
         self.optimal_move_count = -1

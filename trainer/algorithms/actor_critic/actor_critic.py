@@ -1,8 +1,3 @@
-import sys
-import path
-
-sys.path.append(path.Path("algorithms").absolute())
-
 import os
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = 'true'
 
@@ -14,8 +9,7 @@ import numpy as np
 from actor_critic_trainers import predict
 from keras.src.regularizers import L2
 
-from build_networks.build_networks import build_shared_model_simple, build_shared_model_checkers
-
+from trainer.algorithms.build_networks import build_shared_model_simple, build_shared_model_checkers
 
 class ActorCritic:
     def __init__(self, parameters, input_shape, output_shape, env_name, training_mode):

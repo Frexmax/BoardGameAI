@@ -1,7 +1,9 @@
+import warnings
+
 import pygame as pg
 import numpy as np
-import warnings
-from connect4_drawer import Drawer
+
+from simple_games.connect4.connect4_env.env_parts.connect4_drawer import Drawer
 
 
 class Board:

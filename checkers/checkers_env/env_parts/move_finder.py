@@ -1,4 +1,5 @@
-from position_finders import piece_future_positions, king_future_positions, get_captures
+from checkers.checkers_env.env_parts.position_finders import (piece_future_positions,
+                                                              king_future_positions, get_captures)
 
 
 class MoveFinder:

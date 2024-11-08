@@ -1,7 +1,9 @@
+import warnings
+
 import numpy as np
 import pygame as pg
-import warnings
-from tic_tac_toe_drawer import Drawer
+
+from simple_games.tic_tac_toe.tic_tac_toe_env.env_parts.tic_tac_toe_drawer import Drawer
 
 
 class Board:

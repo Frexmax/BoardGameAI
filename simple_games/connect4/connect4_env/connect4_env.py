@@ -1,7 +1,9 @@
 import pickle
+
 import numpy as np
-from env_parts.connect4_board import Board
 from numba import jit
+
+from simple_games.connect4.connect4_env.env_parts.connect4_board import Board
 
 
 class Connect4Env:
