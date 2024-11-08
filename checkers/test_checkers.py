@@ -1,11 +1,16 @@
+import path
+import sys
+
+sys.path.append(path.Path("trainer").absolute())
+
 import pickle
 import pygame as pg
 import time
 import random
-from SelfPlayModel import SelfPlayModel
-from MonteCarloTreeSearch import MonteCarloTreeSearch
-from checkers_env import CheckersEnv
-from CheckersEnvParameters import board_parameters, draw_parameters
+from trainer.self_play_model.self_play_model import SelfPlayModel
+from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
+from checkers_env.checkers_env import CheckersEnv
+from checkers_env.env_parts.env_parameters import board_parameters, draw_parameters
 from pygame.locals import KEYDOWN, K_ESCAPE
 
 HUMAN = True
@@ -15,7 +20,7 @@ AI_PLAYER = 1
 HEURISTIC_WEIGHT = 1
 env = CheckersEnv(board_parameters, draw_parameters, to_render=True)
 model = SelfPlayModel("saved_models/actor-critic-CHECKERS-month-6-day-9-ep-154647-50%.h5")
-with open("saved_models/SavedLogs/log-CHECKERS-month-6-day-9-ep-154647-50.0%.pkl", "rb") as logger_file:
+with open("saved_models/saved_logs/log-CHECKERS-month-6-day-9-ep-154647-50.0%.pkl", "rb") as logger_file:
     logger = pickle.load(logger_file)
 logger.graph_log()
 for episode in range(EPISODES):

@@ -21,8 +21,8 @@ def tournament_pair(env_name, board_parameters, draw_parameters, num_simulations
 
     wins_training = 0
     wins_target = 0
-    trained_model = SelfPlayModel("saved_models/TournamentModels/actor-critic-tournament-target-False.h5")
-    target_model = SelfPlayModel("saved_models/TournamentModels/actor-critic-tournament-target-True.h5")
+    trained_model = SelfPlayModel("saved_models/tournament_models/actor-critic-tournament-target-False.h5")
+    target_model = SelfPlayModel("saved_models/tournament_models/actor-critic-tournament-target-True.h5")
     for game in range(2):
         done = False
         reward = 0

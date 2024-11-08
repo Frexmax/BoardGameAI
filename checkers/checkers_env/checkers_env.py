@@ -1,8 +1,8 @@
 import numpy as np
 import pickle
 from numba import jit
-from CheckersBoard import Board
-from MoveFinder import MoveFinder
+from env_parts.checkers_board import Board
+from env_parts.move_finder import MoveFinder
 
 
 class CheckersEnv:

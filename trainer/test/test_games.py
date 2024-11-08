@@ -23,7 +23,7 @@ def play_test_game_pair(env_name, board_parameters, draw_parameters, num_simulat
     test_model_wins = 0
     test_model_losses = 0
     test_model_draws = 0
-    test_model = SelfPlayModel("saved_models/TestModels/actor-critic-test.h5")
+    test_model = SelfPlayModel("saved_models/test_models/actor-critic-test.h5")
     for test_game in range(2):
         done = False
         reward = 0

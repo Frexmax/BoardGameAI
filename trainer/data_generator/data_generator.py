@@ -68,7 +68,7 @@ def generate_data(env_name, board_parameters, draw_parameters, generation_episod
     generate_data_state = np.zeros((max_steps, *env.refactored_space), dtype=np.float32)
     generate_data_action_probs = np.zeros((max_steps, env.action_space), dtype=np.float32)
     generate_data_reward = np.zeros(max_steps, dtype=np.float32)
-    model = SelfPlayModel("saved_models/DataGenerationModels/actor-critic-self_play.h5")
+    model = SelfPlayModel("saved_models/data_generation_models/actor-critic-self_play.h5")
     for data_episode in range(generation_episodes // num_workers):
         reward = 0
         done = False

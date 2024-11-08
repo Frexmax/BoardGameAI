@@ -3,7 +3,7 @@ import time
 import random
 import pygame as pg
 from SelfPlayModel import SelfPlayModel
-from connect4_env import Connect4Env
+from connect4_env import connect4_env
 from MonteCarloTreeSearch import MonteCarloTreeSearch
 from Connect4EnvParameters import board_parameters, draw_parameters
 

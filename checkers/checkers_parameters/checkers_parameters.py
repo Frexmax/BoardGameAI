@@ -14,7 +14,7 @@ actor_critic_trainer_parameters = {"LOAD": False, "MODEL_PATH": None, "EPISODES"
 
 # ITERATION TRAINING
 actor_critic_trainer_parametersV2 = {"LOAD": True, "MODEL_PATH": "saved_models/actor-critic-CHECKERS-month-6-day-8-12-62%.h5",
-                                     "LOGGER_PATH": "saved_models/SavedLogs/log-CHECKERS-month-6-day-8-ep-125551-62.5%.pkl",
+                                     "LOGGER_PATH": "saved_models/saved_logs/log-CHECKERS-month-6-day-8-ep-125551-62.5%.pkl",
                                      "TEST_GAMES": 16, "TEST_BUDGET": 250, "DECAY": 1, "TOURNAMENT_GAMES": 16,
                                      "TOURNAMENT_BUDGET": 100, "MEMORY_SIZE": 40_000, "MCTS_BUDGET": 600,
                                      "NUM_WORKERS": 8, "ITERATIONS": 40, "DATA_GENERATION_EPISODES": 120,
