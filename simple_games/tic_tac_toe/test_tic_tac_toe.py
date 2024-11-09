@@ -9,10 +9,10 @@ from tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_para
 
 HUMAN = True
 EPISODES = 5
-NUM_SIMULATIONS = 100
+NUM_SIMULATIONS = 500
 AI_PLAYER = -1
 env = TicTacToeEnv(board_parameters, draw_parameters, to_render=True)
-model = SelfPlayModel("")
+model = SelfPlayModel("saved_models/actor-critic-TIC_TAC_TOE-month-11-day-9-ep-0-0%.h5")
 for episode in range(EPISODES):
     done = False
     current_state, actions_index = env.reset()
@@ -48,7 +48,7 @@ for episode in range(EPISODES):
                                         moved = True
                                         break
                     pg.event.clear()
-                env.remove_mark(actions_index, action)
+                env.remove_mark(actions_index)
         new_state, reward, done, actions_index = env.step(action)
         current_state = new_state
         state_player = env.refactor_state(new_state, env.player, env.move_counter)

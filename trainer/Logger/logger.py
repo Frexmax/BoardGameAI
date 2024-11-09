@@ -63,7 +63,7 @@ class Logger:
         today = date.today()
         file_name = f"log-{self.env_name}-month-{today.month}-day-{today.day}-ep-" \
                     f"{self.info['steps'][-1]}-{self.info['win_rate'][-1]*100}%"
-        with open(f"SavedModels/SavedLogs/{file_name}.pkl", 'wb') as f:
+        with open(f"saved_models/saved_logs/{file_name}.pkl", 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def clear(self):

@@ -24,8 +24,8 @@ class TicTacToeEnv:
     def mark_moves(self, action_index):
         self.board.mark_moves(action_index)
 
-    def remove_mark(self, action_index, action):
-        self.board.remove_mark(action_index, action)
+    def remove_mark(self, action_index):
+        self.board.remove_mark(action_index)
 
     def reset(self):
         self.move_counter = 0

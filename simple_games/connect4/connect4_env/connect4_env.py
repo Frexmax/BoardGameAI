@@ -34,7 +34,8 @@ class Connect4Env:
         self.board.reset()
         return np.copy(self.board.np_board), self.find_moves(self.board.np_board, 1, positions=None)
 
-    def add_heuristics(self, state, player, possible_moves):
+    @staticmethod
+    def add_heuristics(state, player, possible_moves):
         return 0
 
     def start_moves(self):
@@ -117,7 +118,8 @@ class Connect4Env:
         move_index.sort()
         return move_index
 
-    def find_positions(self, state):
+    @staticmethod
+    def find_positions(state):
         return [None]
 
     def find_moves(self, state, player, positions):
