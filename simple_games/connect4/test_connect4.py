@@ -9,7 +9,7 @@ from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTr
 
 HUMAN = True
 EPISODES = 5
-NUM_SIMULATIONS = 3000
+NUM_SIMULATIONS = 10
 AI_PLAYER = 1
 env = Connect4Env(board_parameters, draw_parameters, to_render=True)
 model = SelfPlayModel("saved_models/actor-critic--month-5-day-23-7-100%.h5")

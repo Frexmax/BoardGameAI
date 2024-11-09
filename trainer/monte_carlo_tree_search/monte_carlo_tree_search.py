@@ -1,7 +1,9 @@
 import time
+
 import numpy as np
 from numba import jit
-from node import node
+
+from trainer.monte_carlo_tree_search.node.node import Node
 
 
 def apply_dirichlet_noise(action_probs, alpha, epsilon, action_space):

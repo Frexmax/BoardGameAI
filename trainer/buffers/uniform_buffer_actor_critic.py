@@ -50,5 +50,5 @@ class UniformBufferActorCritic:
         today = date.today()
         elements = np.min(self.buffer_capacity, self.buffer_counter)
         file_name = f"buffer-uniform-month-{today.month}-day-{today.day}-elements-{elements}"
-        with open(f"../Trainer/Buffers/SavedBuffers/{file_name}.pkl", 'wb') as f:
+        with open(f"../trainer/buffers/saved_buffers/{file_name}.pkl", 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)

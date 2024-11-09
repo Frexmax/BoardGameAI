@@ -1,4 +1,4 @@
-board_parameters = {"BOARD_WIDTH": 1064, "BOARD_HEIGHT": 912, "BORDER_WIDTH": 40,
+board_parameters = {"BOARD_WIDTH": 800, "BOARD_HEIGHT": 800, "BORDER_WIDTH": 40,
                     "BORDER_COLOUR": (94, 65, 15), "RED_PLAYER_BORDER": (135, 38, 38),
                     "BLACK_PLAYER_BORDER": (61, 53, 53), "LINE_WIDTH": 10}
 

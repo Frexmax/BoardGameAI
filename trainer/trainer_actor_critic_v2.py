@@ -57,6 +57,7 @@ class TrainerActorCriticV2:
         if trainer_parameters["LOAD"]:
             self.actor_critic.load_model(self.model_path)
             self.target_actor_critic.set_weights(self.actor_critic.get_weights())
+            print(self.logger_path)
             with open(self.logger_path, "rb") as logger_file:
                 self.logger = pickle.load(logger_file)
 

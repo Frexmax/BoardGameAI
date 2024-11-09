@@ -5,10 +5,9 @@ from datetime import date
 
 import tensorflow as tf
 import numpy as np
-
-from actor_critic_trainers import predict
 from keras.src.regularizers import L2
 
+from trainer.algorithms.actor_critic.actor_critic_trainers import predict
 from trainer.algorithms.build_networks import build_shared_model_simple, build_shared_model_checkers
 
 class ActorCritic:
@@ -87,16 +86,16 @@ class ActorCritic:
     def save(self, steps, win_rate):
         today = date.today()
         model_name = f"actor-critic-{self.env_name}-month-{today.month}-day-{today.day}-ep-{steps}-{int(win_rate * 100)}%"
-        self.model.save(f'SavedModels/{model_name}.h5')
+        self.model.save(f'saved_models/{model_name}.h5')
 
     def save_self_play(self):
         model_name = f"actor-critic-self_play"
-        self.model.save(f'SavedModels/DataGenerationModels/{model_name}.h5')
+        self.model.save(f'saved_models/data_generation_models/{model_name}.h5')
 
     def save_tournament(self, target=False):
         model_name = f"actor-critic-tournament-target-{target}"
-        self.model.save(f'SavedModels/TournamentModels/{model_name}.h5')
+        self.model.save(f'saved_models/tournament_models/{model_name}.h5')
 
     def save_test(self):
         model_name = f"actor-critic-test"
-        self.model.save(f'SavedModels/TestModels/{model_name}.h5')
+        self.model.save(f'saved_models/test_models/{model_name}.h5')

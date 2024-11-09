@@ -8,7 +8,7 @@ from simple_games.connect4.connect4_env.env_parts.connect4_board import Board
 
 class Connect4Env:
     def __init__(self, board_parameters, draw_parameters, to_render=False):
-        with open('connect4_env/moves_list/OptimalStartMovesV3.pkl', 'rb') as f:
+        with open('connect4_env/moves_list/optimal_start_moves_v3.pkl', 'rb') as f:
             self.optimal_start_moves = pickle.load(f)
         self.optimal_move_count = 7
 
