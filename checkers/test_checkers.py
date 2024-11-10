@@ -10,6 +10,10 @@ from checkers_env.env_parameters.checkers_env_parameters import board_parameters
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 
+with open("saved_models/saved_logs/log-CHECKERS-month-6-day-9-ep-154647-50.0%.pkl", "rb") as logger_file:
+    logger = pickle.load(logger_file)
+logger.graph_log()
+
 
 def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight):
     env = CheckersEnv(board_parameters, draw_parameters, to_render=True)
