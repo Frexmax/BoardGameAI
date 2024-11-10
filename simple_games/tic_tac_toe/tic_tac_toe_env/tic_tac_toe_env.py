@@ -16,7 +16,7 @@ class TicTacToeEnv:
         """
         Constructor for the tic-tac-toe game class.
         Basic data about the possible actions and states is initialized, which is needed for the agent training.
-        The game Board class is also initialize in this constructor, with the provided board and draw
+        The game Board class is also initialized in this constructor, with the provided board and draw
         parameters being passed to the Board
 
         :param board_parameters: parameters for the Board
