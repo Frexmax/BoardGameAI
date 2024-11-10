@@ -55,7 +55,9 @@ class Node:
         best_score = -np.inf
         best_action = -1
         best_child = None
-        dict_action = self.select_dict_action(env, self.state, path_length, start_player, -self.player)
+
+        # dict_action = self.select_dict_action(env, self.state, path_length, start_player, -self.player)
+
         dict_action = False  # CHANGE DUE TO HASH COLLISIONS
         if dict_action:
             best_action = dict_action

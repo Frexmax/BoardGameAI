@@ -15,7 +15,7 @@ class Board:
     When a player makes a move, the state of this board is updated.
 
     It handles rendering of the board, and using the Drawer class,
-    it also the rendering of crosses and circles.
+    it also the rendering of crosses and circles
     """
 
     def __init__(self, board_parameters, draw_parameters, moves, to_render=False):
@@ -120,7 +120,7 @@ class Board:
         Mark all positions on the board, where a player can move (i.e. place his symbol),
         by iterating through the given list with move indexes
 
-        :param action_index: list of indexes of moves from the board's move list
+        :param action_index: list of indexes of moves from the move list
         """
 
         for move in action_index:
@@ -136,7 +136,7 @@ class Board:
         Remove all marks of previous moves from the board,
         by iterating through the give list with move indexes
 
-        :param action_index:
+        :param action_index: list of indexes of moves from the move list
         """
 
         for move in action_index:
@@ -147,12 +147,12 @@ class Board:
             y_pixel = self.centre_of_cells[self.moves[move]][0]
             self.drawer.remove_dot(self.pg_board, x_pixel, y_pixel)
 
-    def render(self, current_player):
+    def render(self, player):
         """
         If the to_render flag is set to True, then render the tic-tac-toe board,
         by placing the board (PyGame Surface) on a PyGame display
 
-        :param current_player: player who is now to play
+        :param player: player who is now to play
         """
 
         if self.to_render:
@@ -167,7 +167,7 @@ class Board:
 
             # Draw both the standard border and the player turn border
             self.drawer.draw_border(game_display, self.width, self.height, self.border_width)
-            self.drawer.draw_player_border(game_display, self.width, self.height, self.border_width, current_player)
+            self.drawer.draw_player_border(game_display, self.width, self.height, self.border_width, player)
 
             # Update PyGame display after these updates
             pg.display.update()
