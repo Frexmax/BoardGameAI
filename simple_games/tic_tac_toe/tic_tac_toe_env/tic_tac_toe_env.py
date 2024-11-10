@@ -288,7 +288,7 @@ class TicTacToeEnv:
     def give_reward(win_state):
         """
         Grant reward based on the winner of the game (1 or -1),
-        if no winner, then there is no reward (0)
+        if no winner, then there is no reward
 
         :param win_state: winner of the game (or lack of one)
         :return: reward for the given winner (or lack thereof)
@@ -309,12 +309,24 @@ class TicTacToeEnv:
         :return: state of the game after move, reward for the new state, game over boolean, moves for the next state
         """
 
+        # Update the board based on the provided move
         self.board.np_board = self.board.make_move(self.board.np_board, action,
                                                    self.player, to_render=self.board.to_render)
+
+        # Get the moves possible from the game state after making the move
         next_actions = self.find_moves(self.board.np_board, self.player, positions=None)
+
+        # Check if game over and who may have won, after making the provided move
         game_end, win_state = self.check_win(self.board.np_board, self.player)
+
+        # Give the reward for the move
         reward = self.give_reward(win_state)
+
+        # Update move counter, after move made
         self.move_counter += 1
+
+        # Swap the player and enemy values, for next turn (as the player making move switches)
         self.player *= -1
         self.enemy *= -1
+
         return np.copy(self.board.np_board), reward, game_end, next_actions

@@ -14,8 +14,8 @@ class Board:
 
     When a player makes a move, the state of this board is updated.
 
-    It handles rendering of the board, and using the Drawer class,
-    it also the rendering of crosses and circles
+    It handles rendering of the board, using the Drawer class,
+    and also the rendering of crosses and circles
     """
 
     def __init__(self, board_parameters, draw_parameters, moves, to_render=False):
