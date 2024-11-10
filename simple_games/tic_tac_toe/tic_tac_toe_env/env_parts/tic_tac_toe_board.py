@@ -77,6 +77,7 @@ class Board:
         Reset the board state, by re-initializing the Numpy array,
         and the PyGame Surface (if the board is to be rendered)
         """
+
         if self.to_render:
             self.initialize_display()
         self.initialize_board()
@@ -87,21 +88,21 @@ class Board:
         calculating the center of grid cells
         """
 
-        self.drawer.fill_display(self.pg_board)
+        self.drawer.fill_display(self.pg_board, self.drawer.WHITE)
         for x in range(3):
             for y in range(3):
+                if x != 0 and y != 0:
+                    # Draw the horizontal line of a grid
+                    start_coordinate_horizontal = (0, y * self.cell_size[1])
+                    end_coordinate_horizontal = (self.width, y * self.cell_size[1])
+                    self.drawer.draw_line(self.pg_board, start_coordinate_horizontal,
+                                          end_coordinate_horizontal, self.line_width, self.drawer.BLACK)
 
-                if x != 0:
-                    # Draw the horizontal lines of a grid
-                    start_coordinate = (0, y * self.cell_size[1])
-                    end_coordinate = (self.width, y * self.cell_size[1])
-                    self.drawer.draw_line(self.pg_board, start_coordinate, end_coordinate, self.line_width, True)
-
-                if y != 0:
-                    # Draw the vertical lines of a grid
-                    start_coordinate = (x * self.cell_size[0], 0)
-                    end_coordinate = (x * self.cell_size[0], self.height)
-                    self.drawer.draw_line(self.pg_board, start_coordinate, end_coordinate, self.line_width, True)
+                    # Draw the vertical line of the grid
+                    start_coordinate_vertical = (x * self.cell_size[0], 0)
+                    end_coordinate_vertical = (x * self.cell_size[0], self.height)
+                    self.drawer.draw_line(self.pg_board, start_coordinate_vertical,
+                                          end_coordinate_vertical, self.line_width, self.drawer.BLACK)
 
                 # Get the centre of a given cell
                 self.centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
@@ -111,6 +112,7 @@ class Board:
         """
         Initialize NumPy board by setting all grid cells to 0
         """
+
         self.np_board.fill(0)
 
     def mark_moves(self, action_index):
@@ -120,6 +122,7 @@ class Board:
 
         :param action_index: list of indexes of moves from the board's move list
         """
+
         for move in action_index:
             # Set x and y PyGame coordinates from the move grid values
             # pixel x is dependent on the column of NumPy array (index 1)
@@ -135,6 +138,7 @@ class Board:
 
         :param action_index:
         """
+
         for move in action_index:
             # Set x and y PyGame coordinates from the move grid values
             # pixel x is dependent on the column of NumPy array (index 1)
