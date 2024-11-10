@@ -1,4 +1,5 @@
 import os
+
 import tensorflow as tf
 
 from checkers.checkers_env.checkers_env import CheckersEnv

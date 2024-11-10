@@ -10,6 +10,7 @@ from keras.src.regularizers import L2
 from trainer.algorithms.actor_critic.actor_critic_trainers import predict
 from trainer.algorithms.build_networks import build_shared_model_simple, build_shared_model_checkers
 
+
 class ActorCritic:
     def __init__(self, parameters, input_shape, output_shape, env_name, training_mode):
         # ENV NAME

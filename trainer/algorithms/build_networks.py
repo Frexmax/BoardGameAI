@@ -3,6 +3,16 @@ from keras.src.layers import Input, Conv2D, BatchNormalization, Flatten, Dense
 
 
 def build_shared_model_simple(input_shape, output_shape, num_kernels, creg, dreg):
+    """
+
+    :param input_shape:
+    :param output_shape:
+    :param num_kernels:
+    :param creg:
+    :param dreg:
+    :return:
+    """
+
     input_layer = Input(shape=input_shape)
     conv0 = Conv2D(num_kernels, (3, 3), padding='same', activation='relu',
                    use_bias=True, data_format='channels_last',
@@ -41,6 +51,16 @@ def build_shared_model_simple(input_shape, output_shape, num_kernels, creg, dreg
 
 
 def build_shared_model_checkers(input_shape, output_shape, num_kernels, creg, dreg):
+    """
+
+    :param input_shape:
+    :param output_shape:
+    :param num_kernels:
+    :param creg:
+    :param dreg:
+    :return:
+    """
+
     input_layer = Input(shape=input_shape)
     conv0 = Conv2D(num_kernels, (3, 3), padding='same', activation='relu',
                    use_bias=True, data_format='channels_last',
