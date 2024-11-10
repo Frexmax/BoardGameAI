@@ -8,9 +8,8 @@ from simple_games.tic_tac_toe.tic_tac_toe_env.env_parts.tic_tac_toe_board import
 class TicTacToeEnv:
     """
     Class implementing the tic-tac-toe game, which also functions as the reinforcement learning environment.
-    High level game functionality is implemented here, the class also
-    acts as an interface for the external player, AI or human with wrapper methods to interact with the
-    Board class.
+    High level game functionality is implemented here, the class also acts as an interface for the external player, AI or human, 
+    with wrapper methods to interact with the Board class.
     """
 
     def __init__(self, board_parameters, draw_parameters, to_render=False):
