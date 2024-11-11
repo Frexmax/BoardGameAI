@@ -1,10 +1,4 @@
-# STEP TRAINING
-actor_critic_trainer_parameters = {"LOAD": False, "MODEL_PATH": None, "EPISODES": 10_000, "TEST_EVERY": 250,
-                                   "TEST_GAMES": 10, "TEST_BUDGET": 100, "DECAY": 0.9, "TOURNAMENT_EVERY": 250,
-                                   "TOURNAMENT_GAMES": 50, "TOURNAMENT_BUDGET": 100, "MEMORY_SIZE": 200_000,
-                                   "MIN_REPLAY_SIZE": 1000, "MCTS_BUDGET": 100, "SAVE_EVERY": 500}
-
-# ITERATION TRAINING
+# Iteration training parameters
 actor_critic_trainer_parametersV2 = {"LOAD": True, "MODEL_PATH": "saved_models/actor-critic--month-5-day-22-8-100%.h5",
                                      "LOGGER_PATH": "saved_models/saved_logs/log-CONNECT4-month-5-day-20-ep-24949-100.0%.pkl",
                                      "TEST_GAMES": 6, "TEST_BUDGET": 100, "DECAY": 1, "TOURNAMENT_GAMES": 18,

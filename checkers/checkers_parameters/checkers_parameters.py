@@ -6,13 +6,7 @@ ppo_trainer_parameters = {"LOAD": False, "MODEL_PATH": None, "EPOCHS": 10, "EPOC
 ppo_parameters = {"ACTOR_LRN": 0.0003, "CRITIC_LRN": 0.0001, "BATCH_SIZE": 256, "CLIP_RATIO": 0.2, "TARGET_KL": 0.01,
                   "ACTOR_ITERATIONS": 80, "CRITIC_ITERATIONS": 80}
 
-# STEP TRAINING
-actor_critic_trainer_parameters = {"LOAD": False, "MODEL_PATH": None, "EPISODES": 10_000, "TEST_EVERY": 400,
-                                   "TEST_GAMES": 10, "TEST_BUDGET": 100, "DECAY": 0.9, "TOURNAMENT_EVERY": 200,
-                                   "TOURNAMENT_GAMES": 30, "TOURNAMENT_BUDGET": 100, "MEMORY_SIZE": 200_000,
-                                   "MIN_REPLAY_SIZE": 1000, "MCTS_BUDGET": 100, "SAVE_EVERY": 400}
-
-# ITERATION TRAINING
+# Iteration training parameters
 actor_critic_trainer_parametersV2 = {"LOAD": True, "MODEL_PATH": "saved_models/actor-critic-CHECKERS-month-6-day-8-12-62%.h5",
                                      "LOGGER_PATH": "saved_models/saved_logs/log-CHECKERS-month-6-day-8-ep-125551-62.5%.pkl",
                                      "TEST_GAMES": 16, "TEST_BUDGET": 250, "DECAY": 1, "TOURNAMENT_GAMES": 16,
