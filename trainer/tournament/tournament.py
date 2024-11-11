@@ -152,7 +152,7 @@ def tournament(env, model_trained, model_target, num_games, num_simulations, heu
         while not done:
             # If there is only 1 action to be picked, then don't run Monte-Carlo-Tree Search simulation,
             # just pick the available action
-            # Otherwise initialize a tree for one of the models, depending whose turn it is
+            # Otherwise initialize a tree for one of the models, depending on whose turn it is
             if len(action_index) == 1:
                 action = action_index[0]
             else:
