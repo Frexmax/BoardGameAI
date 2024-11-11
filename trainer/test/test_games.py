@@ -91,7 +91,7 @@ def play_test_game_pair(env_name, board_parameters, draw_parameters, num_simulat
         # If the end reward is 1, then someone won, update win/loss statistics
         # if the reward is 0, then the game was a draw
         if reward == 1:
-            # If after game end, the model was supposed to move,
+            # If after game end, and the model was supposed to move,
             # then that means that the random agent made the winning move and the model lost
             # otherwise, the model must have won
             if (red_player == "agent" and env.player == -1) or \
@@ -101,4 +101,4 @@ def play_test_game_pair(env_name, board_parameters, draw_parameters, num_simulat
                 test_model_wins += 1
         else:
             test_model_draws += 1
-    return [test_model_wins, test_model_losses, test_model_draws]   
+    return [test_model_wins, test_model_losses, test_model_draws]

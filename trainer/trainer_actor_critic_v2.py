@@ -2,7 +2,6 @@ import gc
 import pickle
 from multiprocessing import Pool
 
-
 from checkers.checkers_env.checkers_env import CheckersEnv
 from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
 from simple_games.connect4.connect4_env.connect4_env import Connect4Env
