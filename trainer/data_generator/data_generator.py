@@ -72,15 +72,16 @@ def finish_episode_np(state_buffer, action_probs_buffer, reward_buffer,
 def generate_data(env_name, board_parameters, draw_parameters, generation_episodes,
                   num_workers, num_simulations, decay, heuristic_weight):
     """
+    Generate training data through self-play and return it to the main training process
 
-    :param env_name:
-    :param board_parameters:
-    :param draw_parameters:
-    :param generation_episodes:
-    :param num_workers:
-    :param num_simulations:
-    :param decay:
-    :param heuristic_weight:
+    :param env_name: name of the environment from which the data should be generated (the one used for training)
+    :param board_parameters: parameters for the game board
+    :param draw_parameters: parameters for the game drawer
+    :param generation_episodes: the total amount of episodes to be run in all data generation processes
+    :param num_workers: number of processes used for data generation
+    :param num_simulations: number of simulation steps to be run in the Monte-Carlo-Tree Search
+    :param decay: reward decay rate, parameter for the value future rewards
+    :param heuristic_weight: weight the heuristics are assigned in the Monte-Carlo-Tree Search
     :return:
     """
 
