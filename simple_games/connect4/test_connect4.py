@@ -53,7 +53,7 @@ def test_connect4(human, episodes, num_simulations, ai_player):
                                             moved = True
                                             break
                         pg.event.clear()
-                    env.remove_mark(actions_index, action)
+                    env.remove_mark(actions_index)
             if root is not None:
                 root = root.children[action]
             new_state, reward, done, actions_index = env.step(action)
@@ -63,3 +63,6 @@ def test_connect4(human, episodes, num_simulations, ai_player):
         time.sleep(3)
         print(f"LAST PLAYER: {env.player}, REWARD: {reward}")
         print("====================================================")
+
+
+test_connect4(HUMAN, EPISODES, NUM_SIMULATIONS, AI_PLAYER)

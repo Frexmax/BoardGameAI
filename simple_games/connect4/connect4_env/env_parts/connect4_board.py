@@ -68,12 +68,11 @@ class Board:
             y_pixel = self.centre_of_cells[self.moves[move]][0]
             self.drawer.add_dot(self.pg_board, x_pixel, y_pixel)
 
-    def remove_mark(self, action_index, action):
+    def remove_mark(self, action_index):
         for move in action_index:
-            if move != action:
-                x_pixel = self.centre_of_cells[self.moves[move]][1]
-                y_pixel = self.centre_of_cells[self.moves[move]][0]
-                self.drawer.remove_dot(self.pg_board, x_pixel, y_pixel)
+            x_pixel = self.centre_of_cells[self.moves[move]][1]
+            y_pixel = self.centre_of_cells[self.moves[move]][0]
+            self.drawer.remove_dot(self.pg_board, x_pixel, y_pixel)
 
     def render(self, current_player):
         if self.to_render:

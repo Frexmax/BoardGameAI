@@ -8,7 +8,8 @@ from simple_games.tic_tac_toe.tic_tac_toe_env.env_parts.tic_tac_toe_board import
 class TicTacToeEnv:
     """
     Class implementing the tic-tac-toe game, which also functions as the reinforcement learning environment.
-    High level game functionality is implemented here, the class also acts as an interface for the external player, AI or human, 
+    High level game functionality is implemented here,
+    the class also acts as an interface for the external player, AI or human,
     with wrapper methods to interact with the Board class.
     """
 
@@ -29,6 +30,9 @@ class TicTacToeEnv:
         self.player = 1
         self.enemy = -1
 
+        # Amount of pieces you need connected to win
+        self.piece_count_for_win = 3
+
         # Information used for reinforcement learning
         # observation space - dimensions of the game state
         self.observation_space = (3, 3)
@@ -37,8 +41,11 @@ class TicTacToeEnv:
         # action space - number of possible actions
         self.action_space = 9
 
+        # Information about how many moves can be made in one round,
+        # and how many moves have been made till now
         self.max_moves = 9
         self.move_counter = 0
+
         self.optimal_move_count = -1
 
         # List of all possible moves
@@ -165,21 +172,19 @@ class TicTacToeEnv:
         move_index.sort()
         return move_index
 
-    def make_move(self, state, action, player, to_render=False):
+    def make_move(self, state, action, player):
         """
         Wrapper method to make a move on the board.
 
         :param state: state of the game
         :param action: action to be performed
         :param player: player making the move
-        :param to_render: render the board flag
         :return: state of the board (NumPy array) after the performed move (from the Board method)
         """
 
-        return self.board.make_move(state, action, player, to_render=to_render)
+        return self.board.make_move(state, action, player, to_render=None)
 
-    @staticmethod
-    def check_win(state, player):
+    def check_win(self, state, player):
         """
         Check for game win for the last player based on the provided game state.
         5 conditions checked:
@@ -198,28 +203,28 @@ class TicTacToeEnv:
 
         # 1. Check if row filled by player
         for x in range(3):
-            if np.count_nonzero(state[x] == player) == 3:
+            if np.count_nonzero(state[x] == player) == self.piece_count_for_win:
                 win_state = player
                 return True, win_state
 
-        # 2 .Check if column filled by player
+        # 2. Check if column filled by player
         for y in range(3):
-            if np.count_nonzero(state[:, y] == player) == 3:
+            if np.count_nonzero(state[:, y] == player) == self.piece_count_for_win:
                 win_state = player
                 return True, win_state
 
         # 3. Check if descending diagonal filled by player
-        if np.count_nonzero(np.array([state[0, 0], state[1, 1], state[2, 2]]) == player) == 3:
+        if np.count_nonzero(np.array([state[0, 0], state[1, 1], state[2, 2]]) == player) == self.piece_count_for_win:
             win_state = player
             return True, win_state
 
         # 4. Check if ascending diagonal filled by player
-        if np.count_nonzero(np.array([state[0, 2], state[1, 1], state[2, 0]]) == player) == 3:
+        if np.count_nonzero(np.array([state[0, 2], state[1, 1], state[2, 0]]) == player) == self.piece_count_for_win:
             win_state = player
             return True, win_state
 
         # 5. Check if the board is full
-        if np.count_nonzero(state != 0) == 9:
+        if np.count_nonzero(state != 0) == self.observation_space[0] * self.observation_space[1]:
             win_state = 0
             return True, win_state
         return False, win_state
@@ -268,7 +273,7 @@ class TicTacToeEnv:
 
         :param state: state of the game
         :param player: player who is about to play
-        :return:
+        :return: state of the game with flipped perspective
         """
 
         return deepcopy(state) * player
@@ -322,7 +327,7 @@ class TicTacToeEnv:
         # Give the reward for the move
         reward = self.give_reward(win_state)
 
-        # Update move counter, after move made
+        # Update move counter, after move is made
         self.move_counter += 1
 
         # Swap the player and enemy values, for next turn (as the player making move switches)

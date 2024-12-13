@@ -2,13 +2,26 @@ import pygame as pg
 
 
 class Drawer:
+    """
+    Helper class for the connect-4 board, tasked with drawing shapes on PyGame displays.
+    """
     def __init__(self, draw_parameters):
-        # RADIUS
+        """
+        Constructor for the connect4 helper drawing class.
+        All parameters, from the provided draw_parameters are
+        stored in the class as attributes.
+
+        Additionally, the BLACK, and WHITE colors are defined from RGB
+
+        :param draw_parameters: parameters for the Drawer
+        """
+
+        # Store basic size parameters for the shapes
         self.piece_radius = draw_parameters["PIECE_R"]
         self.border_radius = draw_parameters["BORDER_R"]
         self.dot_radius = draw_parameters["DOT_R"]
 
-        # COLORS
+        # Store colors for the shapes, highlights and borders
         self.player_colors = {1: draw_parameters["RED_PLAYER_PIECE_COLOR"],
                               -1: draw_parameters["BLACK_PLAYER_PIECE_COLOR"]}
         self.player_border_colors = {1: draw_parameters["RED_PLAYER_BORDER_COLOR"],

@@ -72,7 +72,7 @@ class Drawer:
         :param border_width: width of the border to be drawn
         """
 
-        pg.draw.rect(display, self.border_color, (0, 0, width , height), border_width // 2)
+        pg.draw.rect(display, self.border_color, (0, 0, width, height), border_width // 2)
 
     def draw_player_border(self, display, width, height, border_width, player):
         """
