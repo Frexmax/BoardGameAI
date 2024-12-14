@@ -8,6 +8,13 @@ from checkers.checkers_env.env_parts.move_finder import MoveFinder
 
 
 class CheckersEnv:
+    """
+    Class implementing the checkers game, which also functions as the reinforcement learning environment.
+    High level game functionality is implemented here,
+    the class also acts as an interface for the external player, AI or human,
+    with wrapper methods to interact with the Board class.
+    """
+
     def __init__(self, board_parameters, draw_parameters, to_render=False):
         with open('checkers_env/moves_list/captures_list.pkl', 'rb') as f:
             self.captures_list = pickle.load(f)

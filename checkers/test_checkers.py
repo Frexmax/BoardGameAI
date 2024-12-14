@@ -83,3 +83,11 @@ def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight)
         time.sleep(3)
         print(f"LAST PLAYER: {env.player}, REWARD: {reward}")
         print("==================================================")
+
+
+HUMAN = True
+EPISODES = 5
+NUM_SIMULATIONS = 100
+AI_PLAYER = 1
+
+test_checkers(HUMAN, EPISODES, NUM_SIMULATIONS, AI_PLAYER, 0.5)

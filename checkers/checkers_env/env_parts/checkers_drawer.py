@@ -33,8 +33,6 @@ class Drawer:
                                      -1: draw_parameters["BLACK_PLAYER_BORDER_COLOR"]}
         self.highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
 
-    pg.draw.rect(game_display, self.border_colour, (0, 0, self.width, self.height), self.border_width // 2)
-
     def draw_border(self, display, width, height, border_width):
         """
         Draw a border around the grid on the provided PyGame display according to the
