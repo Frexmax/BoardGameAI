@@ -7,6 +7,12 @@ from simple_games.connect4.train_connect4 import train_connect4
 from simple_games.tic_tac_toe.train_tic_tac_toe import train_tic_tac_toe
 from simple_games.tic_tac_toe.test_tic_tac_toe import test_tic_tac_toe
 
+# HUMAN = True
+# EPISODES = 5
+# NUM_SIMULATIONS = 500
+# AI_PLAYER = -1
+
+
 if __name__ == "__main__":
     game = sys.argv[1]
     mode = sys.argv[2]

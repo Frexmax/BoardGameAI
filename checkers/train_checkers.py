@@ -4,6 +4,6 @@ from trainer.rl_trainer import TrainerActorCriticV2
 
 
 def train_checkers():
-        trainer = TrainerActorCriticV2(trainer_parameters, actor_critic_parameters, env_name="CHECKERS",
-                                       draw_parameters=draw_parameters, board_parameters=board_parameters)
-        trainer.run()
+    trainer = TrainerActorCriticV2(trainer_parameters, actor_critic_parameters, env_name="CHECKERS",
+                                   draw_parameters=draw_parameters, board_parameters=board_parameters)
+    trainer.run()

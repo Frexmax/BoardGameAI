@@ -1,3 +1,8 @@
+"""
+Parameters stored for setting up the connect4
+environment and tools necessary to make it work
+"""
+
 board_parameters = {"BOARD_WIDTH": 800, "BOARD_HEIGHT": 800, "BORDER_WIDTH": 40,
                     "BORDER_COLOUR": (94, 65, 15), "RED_PLAYER_BORDER": (135, 38, 38),
                     "BLACK_PLAYER_BORDER": (61, 53, 53)}

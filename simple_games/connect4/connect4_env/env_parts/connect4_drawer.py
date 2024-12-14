@@ -5,13 +5,14 @@ class Drawer:
     """
     Helper class for the connect-4 board, tasked with drawing shapes on PyGame displays.
     """
+
     def __init__(self, draw_parameters):
         """
         Constructor for the connect4 helper drawing class.
         All parameters, from the provided draw_parameters are
         stored in the class as attributes.
 
-        Additionally, the BLACK, and WHITE colors are defined from RGB
+        Additionally, the BLACK, WHITE, and the DARK_BLUE colors are defined from RGB
 
         :param draw_parameters: parameters for the Drawer
         """

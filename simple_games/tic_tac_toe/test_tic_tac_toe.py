@@ -7,11 +7,6 @@ from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 from tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
 
-# HUMAN = True
-# EPISODES = 5
-# NUM_SIMULATIONS = 500
-# AI_PLAYER = -1
-
 
 def test_tic_tac_toe(human, episodes, num_simulations, ai_player):
     env = TicTacToeEnv(board_parameters, draw_parameters, to_render=True)
