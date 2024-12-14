@@ -263,7 +263,6 @@ class Board:
         :return: board state after performing the move, positions of new king (if one has been made, else None)
         """
 
-        new_king_position = None
         starting_position = moves_list[action][0]
         new_position = moves_list[action][-1]
         piece_type = int(abs(state[starting_position]))
@@ -300,7 +299,9 @@ class Board:
             self.make_capture_move(state, piece_type, player, new_position,
                                    new_pixel_x, new_pixel_y, captures, to_render)
 
-        if len(np.where(state[0] == 1)[0]) > 0:  # CHECK IF NEW KINGS FOR RED
+        new_king_position = self.check_new_king_made(state, player, new_position, new_pixel_x, new_pixel_y, to_render)
+
+        """if len(np.where(state[0] == 1)[0]) > 0:  # CHECK IF NEW KINGS FOR RED
             y = np.where(state[0] == 1)[0][0]
             state[0][np.where(state[0] == 1)[0][0]] = 2
             new_king_position = (0, y)
@@ -312,21 +313,48 @@ class Board:
             state[7][np.where(state[7] == -1)[0][0]] = -2
             new_king_position = (7, y)
             if to_render:
-                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)
+                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)"""
+
         return np.copy(state), new_king_position
+
+    def check_new_king_made(self, state, player, new_position, new_pixel_x, new_pixel_y, to_render):
+        """
+        Check if a new king has been made during the move.
+        This check is made by looking at the new position of the moved piece.
+        If the new position is at the top row for the red player, or the bottom row for the black player,
+        then the piece transforms to a king, for the respective player
+
+        :param state: board state from which the move should be made
+        :param player: player making the move
+        :param new_position: position of the piece after movement
+        :param new_pixel_x: x pixel coordinate of the new piece position on PyGame display
+        :param new_pixel_y: y pixel coordinate of the new piece position on PyGame display
+        :param to_render: render the board flag
+        :return: new king position, if a new king was made, else None
+        """
+
+        new_king_position = None
+        if (new_position[0] == 0 and player == 1) or (new_position[0] == 7 and player == -1):
+            state[new_position] = 2 * player
+            new_king_position = (new_position[0], new_position[1])
+            if to_render:
+                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)
+        return new_king_position
 
     def make_no_capture_move(self, state, piece_type, player,
                              new_position, new_pixel_x, new_pixel_y, to_render):
         """
+        Move a piece with no captures.
+        Achieved by updating numpy board and PyGame display
 
-        :param state:
-        :param piece_type:
-        :param player:
-        :param new_position:
-        :param new_pixel_x:
-        :param new_pixel_y:
-        :param to_render:
-        :return:
+        :param state: board state from which the move should be made
+        :param piece_type: type of the moved piece; 1 - standard piece, 2 - king piece
+        :param player: player making the move
+        :param new_position: position of the piece after movement
+        :param new_pixel_x: x pixel coordinate of the new piece position on PyGame display
+        :param new_pixel_y: y pixel coordinate of the new piece position on PyGame display
+        :param to_render: render the board flag
+        :return: new king position, if a new king was made, else None
         """
 
         if piece_type == 1:
@@ -344,6 +372,25 @@ class Board:
 
     def make_capture_move(self, state, piece_type, player, new_position,
                           new_pixel_x, new_pixel_y, captures, to_render):
+        """
+        Move a piece with captures.
+        Achieved by iterating through all captures,
+        and updating numpy board and PyGame display for each captured position (i.e. eliminating the captured piece).
+        Lastly, the capturing piece is moved in the "standard" way
+
+        updating numpy board and PyGame display
+
+        :param state: board state from which the move should be made
+        :param piece_type: type of the moved piece; 1 - standard piece, 2 - king piece
+        :param player: player making the move
+        :param new_position: position of the piece after movement
+        :param new_pixel_x: x pixel coordinate of the new piece position on PyGame display
+        :param new_pixel_y: y pixel coordinate of the new piece position on PyGame display
+        :param captures: list of captures made in the move
+        :param to_render: render the board flag
+        :return: new king position, if a new king was made, else None
+        """
+
         for capture in captures:
             if to_render:
                 # If the game is being rendered, remove the capture piece from the display
@@ -352,19 +399,8 @@ class Board:
                 # self.drawer.remove_piece(self.pg_board, start_pixel_x, start_pixel_y)
                 self.drawer.remove_piece(self.pg_board, capture_pixel_x, capture_pixel_y)
 
-            # Move the piece without any captures
-            self.make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)
-
-            """
-            if piece_type == 1:
-                state[new_position] = player
-                if to_render:
-                    self.drawer.draw_piece(self.pg_board, new_pixel_x, new_pixel_y, player)  # DRAW PIECE
-            else:
-                state[new_position] = 2 * player
-                if to_render:
-                    self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)  # DRAW KING
-            """
-
             # Set the captured position to 0, indicating empty space
             state[capture] = 0
+
+        # Move the piece without any captures
+        self.make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)
