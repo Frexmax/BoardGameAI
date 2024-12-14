@@ -11,6 +11,7 @@ The games themselves, which also function as reinforcement learning training env
 
 ### Tic-Tac-Toe
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/e3921e88-6758-4168-9b58-ec05cd691f6d" width=50% height=50%>
 </p>
 
 ### Connect 4
