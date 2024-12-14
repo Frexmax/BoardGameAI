@@ -7,5 +7,6 @@ trainer_parameters = {"LOAD": True, "MODEL_PATH": "saved_models/actor-critic--mo
                       "THRESHOLD": 0.55, "HEURISTIC_START_WEIGHT": 0, "HEURISTIC_END_WEIGHT": 0,
                       "HEURISTIC_STEPS": 1}
 
+# Parameters for the Actor-Critic model
 actor_critic_parameters = {"LEARNING_RATE": 0.001, "BATCH_SIZE": 128, "TRAINING_ITERATIONS": 40, "STEP_SIZE": 1000,
                            "NUM_KERNELS": 128, "CONV_REGULARIZATION": 0.001, "DENSE_REGULARIZATION": 0.001}

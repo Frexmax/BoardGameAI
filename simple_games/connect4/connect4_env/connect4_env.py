@@ -150,6 +150,7 @@ class Connect4Env:
         # 1. Check if in any row, the required amount of pieces is connected
         for row in range(6):
             for window_num in range(4):
+                # Create an array with the next four cells on the row, starting from window_num
                 window = state[row, window_num:window_num + self.piece_count_for_win]
                 if np.count_nonzero(window == player) == self.piece_count_for_win:
                     win_state = player
@@ -159,6 +160,7 @@ class Connect4Env:
         # 2. Check if in any column, the required amount of pieces is connected
         for column in range(7):
             for window_num in range(3):
+                # Create an array with the next four cells on the column, starting from window_num
                 window = state[window_num:window_num + self.piece_count_for_win, column]
                 if np.count_nonzero(window == player) == self.piece_count_for_win:
                     win_state = player
@@ -181,6 +183,7 @@ class Connect4Env:
         # 4. Check if in any increasing diagonal, the required amount of pieces is connected
         for y in range(4):
             for x in range(3):
+                # Create an array with the next four cells on the increasing diagonal, starting from coordinate (x, y)
                 diagonal = np.array([state[x, self.observation_space[0] - y],
                                      state[1 + x, (self.observation_space[0] - 1) - y],
                                      state[2 + x, (self.observation_space[0] - 2) - y],

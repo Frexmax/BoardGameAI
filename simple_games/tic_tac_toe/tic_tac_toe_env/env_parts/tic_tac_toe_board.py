@@ -54,9 +54,10 @@ class Board:
 
         # Store the rendering flag
         self.to_render = to_render
+
         if self.to_render:
-            # If the board should be rendered, then calculate size of each cell and
-            # the grid PyGame pixel coordinates
+            # If the board should be rendered, then calculate size of each cell
+            # and the grid PyGame pixel coordinates
             self.cell_size = ((self.width - self.border_width) // 3,
                               (self.height - self.border_width) // 3)
             self.centre_offset = (self.cell_size[0] * 0.5, self.cell_size[1] * 0.5)
@@ -89,6 +90,7 @@ class Board:
         """
 
         self.drawer.fill_display(self.pg_board, self.drawer.WHITE)
+
         for x in range(3):
             for y in range(3):
                 if x != 0 and y != 0:
@@ -104,9 +106,10 @@ class Board:
                     self.drawer.draw_line(self.pg_board, start_coordinate_vertical,
                                           end_coordinate_vertical, self.line_width, self.drawer.BLACK)
 
-                # Get the centre of a given cell
-                self.centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
-                                                self.cell_size[0] // 2 + x * self.cell_size[0])
+                if self.to_render:
+                    # Get the centre of a given cell
+                    self.centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
+                                                    self.cell_size[0] // 2 + x * self.cell_size[0])
 
     def initialize_board(self):
         """
@@ -129,6 +132,7 @@ class Board:
             # pixel y on the row (index 0)
             x_pixel = self.centre_of_cells[self.moves[move]][1]
             y_pixel = self.centre_of_cells[self.moves[move]][0]
+
             self.drawer.add_dot(self.pg_board, x_pixel, y_pixel)
 
     def remove_mark(self, action_index):
@@ -145,6 +149,7 @@ class Board:
             # pixel y on the row (index 0)
             x_pixel = self.centre_of_cells[self.moves[move]][1]
             y_pixel = self.centre_of_cells[self.moves[move]][0]
+
             self.drawer.remove_dot(self.pg_board, x_pixel, y_pixel)
 
     def render(self, player):
@@ -160,7 +165,7 @@ class Board:
 
             # Create display (PyGame window)
             game_display = pg.display.set_mode((self.width, self.height))
-            pg.display.set_caption("Connect4Board")
+            pg.display.set_caption("Tic-Tac-Toe Board")
 
             # Place the board on the newly created display
             game_display.blit(self.pg_board, self.pg_board.get_rect(center=(self.width // 2, self.height // 2)))
