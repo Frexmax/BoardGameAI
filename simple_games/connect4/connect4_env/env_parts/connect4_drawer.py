@@ -92,7 +92,7 @@ class Drawer:
         Draw a connect4 piece on the provided PyGame display, with the color dependent
         on the player to whom the piece belongs
 
-        :param display: PyGame display where the circle should be drawn
+        :param display: PyGame display where the piece should be drawn
         :param x: x coordinate of the center of the piece
         :param y: y coordinate of the center of the piece
         :param player: player who is now to play
@@ -107,7 +107,7 @@ class Drawer:
         """
         Remove a connect4 piece from the provided PyGame display by drawing a white circle on its place
 
-        :param display: PyGame display where the circle should be drawn
+        :param display: PyGame display where the piece should be drawn
         :param x: x coordinate of the center of the circle
         :param y: y coordinate of the center of the circle
         """

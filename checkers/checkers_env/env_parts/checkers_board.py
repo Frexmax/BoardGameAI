@@ -7,53 +7,95 @@ from checkers.checkers_env.env_parts.checkers_drawer import Drawer
 
 
 class Board:
+    """
+    Class responsible for the checkers board.
+    The board state is kept as a numpy array, with 1 representing player 1 (red)
+    and -1 (gray) representing player -1.
+
+    When a player makes a move, the state of this board is updated.
+
+    It handles rendering of the board, using the Drawer class, rendering of the pieces,
+    and also the highlighting of selected pieces
+    """
+
     def __init__(self, board_parameters, draw_parameters, to_render=False):
-        # BOARD INFO
+        """
+        Constructor for the checkers Board class.
+        All parameters, from the provided parameter dictionaries
+        are stored within the class as attributes
+
+        Moreover, the necessary tools for the board to function are also set up (if necessary).
+        - The 8x8 NumPy board
+        - Drawer class for drawing on the PyGame display
+        - The PyGame Surface used for drawing the board
+        - Dictionary, which places the NumPy array indexes, representing each cell in the game grid,
+          to the corresponding pixel coordinate in PyGame
+
+        :param board_parameters: parameters for the Board
+        :param draw_parameters: parameters for the Drawer
+        :param to_render: render the board flag
+        """
+
+        # Store board parameters in the class
         self.width = board_parameters["BOARD_WIDTH"]
         self.height = board_parameters["BOARD_HEIGHT"]
         self.border_width = board_parameters["BORDER_WIDTH"]
-        self.border_colour = board_parameters["BORDER_COLOUR"]
-        self.red_player_border = board_parameters["RED_PLAYER_BORDER"]
-        self.black_player_border = board_parameters["BLACK_PLAYER_BORDER"]
 
-        # DRAWER
+        # Initialize the Drawer class
         self.drawer = Drawer(draw_parameters)
 
-        # CALCULATE CELL SIZE
-        self.cell_size = ((self.width - self.border_width) // 8,
-                          (self.height - self.border_width) // 8)
+        # Initialize the NumPy board
         self.np_board = np.zeros((8, 8))
-        self.centre_of_cells = {}
 
-        # RENDER AND GAME DISPLAY
+        # Store the rendering flag
         self.to_render = to_render
+
         if self.to_render:
+            # If the board should be rendered, then calculate size of each cell
+            # and the grid PyGame pixel coordinates
             self.pg_board = pg.Surface((self.width - self.border_width, self.height - self.border_width))
             self.cell_size = ((self.width - self.border_width) // 8,
-                              (self.height - self.border_width) // 8)  # CALCULATE CELL SIZE
+                              (self.height - self.border_width) // 8)
+            self.centre_of_cells = {}
         else:
+            # If the board will not be rendered, then there is no need to keep any data necessary for rendering,
+            # therefore the attributes can be simply assigned to None
+            self.cell_size = None
+            self.centre_offset = None
+            self.centre_of_cells = None
             self.pg_board = None
 
     def reset(self):
+        """
+        Reset the board state, by re-initializing the Numpy array,
+        and the PyGame Surface (if the board is to be rendered)
+        """
+
         if self.to_render:
             self.initialize_display()
         self.initialize_board()
 
-    def render_player_border(self, display, current_player):
-        if current_player == 1:
-            pg.draw.rect(display, self.red_player_border, (0, 0, self.width, self.height), self.border_width // 4)
-        else:
-            pg.draw.rect(display, self.black_player_border, (0, 0, self.width, self.height), self.border_width // 4)
+    def render(self, player):
+        """
+        If the to_render flag is set to True, then render the checkers board,
+        by placing the board (PyGame Surface) on a PyGame display
 
-    def render(self, current_player):
+        :param player: player who is now to play
+        """
+
         if self.to_render:
             pg.init()
+
+            # Create display (PyGame window)
             game_display = pg.display.set_mode((self.width, self.height))
             pg.display.set_caption("CheckersBoard")
-            pg.event.pump()
+
+            # Place the board on the newly created display
             game_display.blit(self.pg_board, self.pg_board.get_rect(center=(self.width // 2, self.height // 2)))
-            pg.draw.rect(game_display, self.border_colour, (0, 0, self.width, self.height), self.border_width // 2)
-            self.render_player_border(game_display, current_player)
+
+            # Draw both the standard border and the player turn border
+            self.drawer.draw_border(game_display, self.width, self.height, self.border_width)
+            self.drawer.draw_player_border(game_display, self.width, self.height, self.border_width, player)
             pg.display.update()
         else:
             warnings.warn("Can't render without display. Set 'to_render' = True")
@@ -107,12 +149,19 @@ class Board:
                     else:
                         x_pixel = x * self.cell_size[0]
                         pg.draw.rect(self.pg_board, (0, 0, 0), (x_pixel, y_pixel, self.cell_size[0], self.cell_size[1]))
-                # GET CENTRE OF CELLS - FOR PYGAME DISPLAY
-                self.centre_of_cells[(x, y)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
-                                                self.cell_size[0] // 2 + x * self.cell_size[0])
+
+                if self.to_render:
+                    # Get the centre of a given cell
+                    self.centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
+                                                    self.cell_size[0] // 2 + x * self.cell_size[0])
 
     def initialize_board(self):
+        """
+        Initialize NumPy board by setting all grid cells to 0
+        """
+
         self.np_board.fill(0)
+
         # DRAW BLACK
         for x in range(0, 3):
             if x % 2 != 0:
@@ -152,6 +201,12 @@ class Board:
                     self.np_board[x][y] = 1
 
     def update_board(self, state):
+        """
+        Set the current board state to the one provided
+
+        :param state: new board state
+        """
+
         self.np_board = np.copy(state)
 
     def make_move(self, state, action, player, moves_list, captures_list, to_render=None):

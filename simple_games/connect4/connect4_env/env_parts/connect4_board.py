@@ -9,8 +9,8 @@ from simple_games.connect4.connect4_env.env_parts.connect4_drawer import Drawer
 class Board:
     """
     Class responsible for the connect4 board.
-    The board state is kept as a numpy array, with 1 representing player 1 (crosses)
-    and -1 representing player -1 (circles).
+    The board state is kept as a numpy array, with 1 representing player 1 (red)
+    and -1 (gray) representing player -1.
 
     When a player makes a move, the state of this board is updated.
 
