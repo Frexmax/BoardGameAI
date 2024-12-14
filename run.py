@@ -2,19 +2,32 @@ import sys
 
 from checkers.test_checkers import test_checkers
 from checkers.train_checkers import train_checkers
-
+from simple_games.connect4.test_connect4 import test_connect4
+from simple_games.connect4.train_connect4 import train_connect4
+from simple_games.tic_tac_toe.train_tic_tac_toe import train_tic_tac_toe
+from simple_games.tic_tac_toe.test_tic_tac_toe import test_tic_tac_toe
 
 if __name__ == "__main__":
-    game_to_play = sys.argv[1]
-    run_mode = sys.argv[2]
+    game = sys.argv[1]
+    mode = sys.argv[2]
 
-    if game_to_play == "CHECKERS":
-        if run_mode == "TRAIN":
+    if mode == "train":
+        if game == "checkers":
             train_checkers()
+        elif game == "connect4":
+            train_connect4()
         else:
-            test_checkers()
-
-    elif game_to_play == "CONNECT4":
-        pass
+            train_tic_tac_toe()
     else:
-        pass
+        human = bool(sys.argv[3])
+        episodes = int(sys.argv[4])
+        num_simulations = int(sys.argv[5])
+        ai_player = int(sys.argv[6])
+        heuristic_weight = float(sys.argv[7])
+
+        if game == "checkers":
+            test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight)
+        elif game == "connect4":
+            test_connect4(human, episodes, num_simulations, ai_player)
+        else:
+            test_tic_tac_toe(human, episodes, num_simulations, ai_player)

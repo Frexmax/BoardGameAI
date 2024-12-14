@@ -9,7 +9,6 @@ from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTr
 from trainer.self_play_model.self_play_model import SelfPlayModel
 
 
-
 def tournament_pair(env_name, board_parameters, draw_parameters, num_simulations, heuristic_weight):
     """
     Play 2 games of the currently trained model, against an older model, which till now had the best performance.

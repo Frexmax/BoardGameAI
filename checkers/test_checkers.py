@@ -5,8 +5,8 @@ import random
 import pygame as pg
 from pygame.locals import KEYDOWN, K_ESCAPE
 
-from checkers_env.checkers_env import CheckersEnv
-from checkers_env.env_parameters.checkers_env_parameters import board_parameters, draw_parameters
+from checkers.checkers_env.checkers_env import CheckersEnv
+from checkers.checkers_env.env_parameters.checkers_env_parameters import board_parameters, draw_parameters
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 
