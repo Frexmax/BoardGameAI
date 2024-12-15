@@ -26,6 +26,7 @@ class Drawer:
 
         # Store colors for the shapes, highlights and borders
         self.BLACK = (0, 0, 0)
+        self.WHITE = (255, 255, 255)
         self.border_color = draw_parameters["BORDER_COLOR"]
         self.player_colors = {1: draw_parameters["RED_PLAYER_PIECE_COLOR"],
                               -1: draw_parameters["BLACK_PLAYER_PIECE_COLOR"]}
@@ -33,14 +34,41 @@ class Drawer:
                                      -1: draw_parameters["BLACK_PLAYER_BORDER_COLOR"]}
         self.highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
 
+    @staticmethod
+    def fill_display(display, color):
+        """
+        Fill the provided PyGame display with a color, used for e.g. setting the background
+
+        :param display: PyGame display which should be filled with a certain color
+        :param color: color which should fill the display
+        """
+
+        display.fill(color)
+
+    @staticmethod
+    def draw_rectangle(display, x, y, width, height, color):
+        """
+        Draw a simple rectangle with the top-left corner at coordinates (x, y),
+        and the provided width and height. The rectangle is filled with the specified color
+
+        :param display: PyGame display where the border should be drawn
+        :param x: x coordinate of the rectangle's top-left corner
+        :param y: y coordinate of the rectangle's top-left corner
+        :param width: width of the rectangle
+        :param height: height of the rectangle
+        :param color: color of the rectangle
+        """
+
+        pg.draw.rect(display, color, (x, y, width, height))
+
     def draw_border(self, display, width, height, border_width):
         """
         Draw a border around the grid on the provided PyGame display according to the
         provided display size and border with.
 
         :param display: PyGame display where the border should be drawn
-        :param width: width of the PyGame display
-        :param height: height of the PyGame display
+        :param width: width of the border
+        :param height: height of the border
         :param border_width: width of the border to be drawn
         """
 
@@ -53,9 +81,9 @@ class Drawer:
         and the specified border width. This border is half as wide as the main one.
 
         :param display: PyGame display where the border should be drawn
-        :param width: width of the PyGame display
-        :param height: height of the PyGame display
-        :param border_width: width of the border to be drawn
+        :param width: width of the border
+        :param height: height of the border
+        :param border_width: thickness of the border to be drawn
         :param player: player who is about to play
         """
 

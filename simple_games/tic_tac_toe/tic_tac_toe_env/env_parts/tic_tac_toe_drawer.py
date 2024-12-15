@@ -67,9 +67,9 @@ class Drawer:
         provided display size and border with.
 
         :param display: PyGame display where the border should be drawn
-        :param width: width of the PyGame display
-        :param height: height of the PyGame display
-        :param border_width: width of the border to be drawn
+        :param width: width of the border
+        :param height: height of the border
+        :param border_width: thickness of the border to be drawn
         """
 
         pg.draw.rect(display, self.border_color, (0, 0, width, height), border_width // 2)
@@ -81,9 +81,9 @@ class Drawer:
         and the specified border width. This border is half as wide as the main one.
 
         :param display: PyGame display where the border should be drawn
-        :param width: width of the PyGame display
-        :param height: height of the PyGame display
-        :param border_width: width of the border to be drawn
+        :param width: width of the border
+        :param height: height of the border
+        :param border_width: thickness of the border to be drawn
         :param player: player who is about to play
         """
 

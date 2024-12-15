@@ -178,18 +178,28 @@ class Board:
                 "rectangle_coordinates": coords_rectangle, "dot_coordinates": dot_coords, "piece_type": piece_type}
 
     def initialize_display(self):
-        self.pg_board.fill((255, 255, 255))
-        for x in range(0, 8):
-            for y in range(0, 8):
+        """
+        Initialize the PyGame Surface, by drawing the checkers grid and
+        calculating the center of grid cells
+        """
+
+        self.drawer.fill_display(self.pg_board, self.drawer.WHITE)
+
+        for x in range(8):
+            for y in range(8):
                 if x % 2 == 0:
-                    # DRAW BLACK SQUARES
+                    # Calculate the PyGame pixel coordinates of the grid cell's top-left corner
                     y_pixel = y * self.cell_size[1]
                     if (y + 1) % 2 != 0:
+                        # Calculate x coordinates for rows starting with white cell
                         x_pixel = (x + 1) * self.cell_size[0]
-                        pg.draw.rect(self.pg_board, (0, 0, 0), (x_pixel, y_pixel, self.cell_size[0], self.cell_size[1]))
                     else:
+                        # Calculate x coordinates for rows starting with black cell
                         x_pixel = x * self.cell_size[0]
-                        pg.draw.rect(self.pg_board, (0, 0, 0), (x_pixel, y_pixel, self.cell_size[0], self.cell_size[1]))
+
+                    # Draw the black grid cells, on a white background
+                    self.drawer.draw_rectangle(self.pg_board, x_pixel, y_pixel,
+                                               self.cell_size[0], self.cell_size[1], self.drawer.BLACK)
 
                 if self.to_render:
                     # Get the centre of a given cell
@@ -198,48 +208,49 @@ class Board:
 
     def initialize_board(self):
         """
-        Initialize NumPy board by setting all grid cells to 0
+        First reset the numpy board, by setting all cells to 0,
+        and then place the starting pieces for both players.
+        If the board is set to render, then also draw these pieces on the PyGame display
         """
+
+        def set_up_piece(piece_x, piece_y, player):
+            """
+            Place a piece for the provided player at the specified coordinates on the numpy board.
+            If the board is set to render, then obtain the corresponding PyGame pixel coordinates,
+            and draw the piece on the PyGame board
+
+            :param piece_x: x coordinate of the piece on the numpy board
+            :param piece_y: y coordinate of the piece on the numpy board
+            :param player: player to whom the piece belongs
+            """
+
+            if self.to_render:
+                centre = self.centre_of_cells[(piece_x, piece_y)]
+                pixel_x = centre[0]
+                pixel_y = centre[1]
+                self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, player)
+            self.np_board[piece_x][piece_y] = -1
 
         self.np_board.fill(0)
 
-        # DRAW BLACK
+        # Draw black pieces (player -1 pieces)
         for x in range(0, 3):
             if x % 2 != 0:
                 for y in range(0, 8, 2):
-                    if self.to_render:
-                        centre = self.centre_of_cells[(x, y)]
-                        pixel_x = centre[0]
-                        pixel_y = centre[1]
-                        self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, -1)
-                    self.np_board[x][y] = -1
+                    set_up_piece(x, y, player=-1)
             else:
                 for y in range(1, 8, 2):
                     if self.to_render:
-                        centre = self.centre_of_cells[(x, y)]
-                        pixel_x = centre[0]
-                        pixel_y = centre[1]
-                        self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, -1)
-                    self.np_board[x][y] = -1
+                        set_up_piece(x, y, player=-1)
 
-        # DRAW RED
+        # Draw red pieces (player 1 pieces)
         for x in range(5, 8):
             if x % 2 != 0:
                 for y in range(0, 8, 2):
-                    if self.to_render:
-                        centre = self.centre_of_cells[(x, y)]
-                        pixel_x = centre[0]
-                        pixel_y = centre[1]
-                        self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, 1)
-                    self.np_board[x][y] = 1
+                    set_up_piece(x, y, player=1)
             else:
                 for y in range(1, 8, 2):
-                    if self.to_render:
-                        centre = self.centre_of_cells[(x, y)]
-                        pixel_x = centre[0]
-                        pixel_y = centre[1]
-                        self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, 1)
-                    self.np_board[x][y] = 1
+                    set_up_piece(x, y, player=1)
 
     def update_board(self, state):
         """
@@ -252,7 +263,8 @@ class Board:
 
     def make_move(self, state, action, player, moves_list, captures_list, to_render=None):
         """
-        Perform the chosen action for the provided state and player
+        Perform the chosen action for the provided state and player.
+        Update the numpy board and if necessary also re-draw the PyGame board cells
 
         :param state: board state from which the move should be made
         :param action: move to be made
@@ -300,20 +312,6 @@ class Board:
                                    new_pixel_x, new_pixel_y, captures, to_render)
 
         new_king_position = self.check_new_king_made(state, player, new_position, new_pixel_x, new_pixel_y, to_render)
-
-        """if len(np.where(state[0] == 1)[0]) > 0:  # CHECK IF NEW KINGS FOR RED
-            y = np.where(state[0] == 1)[0][0]
-            state[0][np.where(state[0] == 1)[0][0]] = 2
-            new_king_position = (0, y)
-            if to_render:
-                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)
-
-        if len(np.where(state[7] == -1)[0]) > 0:  # CHECK IF NEW KINGS FOR BLACK
-            y = np.where(state[7] == -1)[0][0]
-            state[7][np.where(state[7] == -1)[0][0]] = -2
-            new_king_position = (7, y)
-            if to_render:
-                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)"""
 
         return np.copy(state), new_king_position
 

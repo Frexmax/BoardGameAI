@@ -33,7 +33,7 @@ class Board:
 
         :param board_parameters: parameters for the Board
         :param draw_parameters: parameters for the Drawer
-        :param moves: list of all possible moves in tic-tac-toe
+        :param moves: list of all possible moves in connect4
         :param to_render: render the board flag
         """
 
@@ -91,7 +91,7 @@ class Board:
 
     def initialize_display(self):
         """
-        Initialize the PyGame Surface, by drawing the tic-tac-toe grid and
+        Initialize the PyGame Surface, by drawing the connect4 grid and
         calculating the center of grid cells
         """
 
