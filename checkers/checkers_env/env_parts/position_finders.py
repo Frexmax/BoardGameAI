@@ -3,6 +3,17 @@ from numba import jit
 
 @jit(nopython=True)
 def valid(np_board, x, y):
+    """
+    Check if a piece can move the position (x, y),
+    by verifying that it is withing the bounds of the board (0 - 8 inclusive for both x and y),
+    and that there are no other pieces already present in that position
+
+    :param np_board: state of the game board as a numpy array
+    :param x: x coordinate on the numpy board
+    :param y: y coordinate on the numpy board
+    :return: True, if the piece can move to that position, else False
+    """
+
     if 8 > x >= 0 and 0 <= y < 8:
         if np_board[x, y] == 0:
             return True
@@ -11,6 +22,18 @@ def valid(np_board, x, y):
 
 @jit(nopython=True)
 def valid_capture(np_board, capture_pos, future_pos, player):
+    """
+    Check if a capture movement can be made by the specified player,
+    by verifying that the end position is withing the bounds of the board (0 - 8 inclusive for both x and y),
+    and that the captured position is occupied by an enemy piece (-1 * player -> standard, -2 * player -> king)
+
+    :param np_board: state of the game board as a numpy array
+    :param capture_pos: numpy array with x, y coordinates of the position captured in the move
+    :param future_pos: numpy array with x, y coordinates of the end future in the move
+    :param player: player making the capture move 
+    :return: True, if the capture move can be made, else False
+    """
+
     if 0 <= future_pos[0] < 8 and 0 <= future_pos[1] < 8:
         if np_board[future_pos] == 0 and (np_board[capture_pos] == -player or
                                           np_board[capture_pos] == -2 * player):

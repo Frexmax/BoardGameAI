@@ -24,6 +24,13 @@ The games themselves, which also function as reinforcement learning training env
   <img src="https://github.com/user-attachments/assets/1051e6d9-888d-4f1f-96f2-276a55b21595" width=50% height=50%>
 </p>
 
+## Running the Program
+
+### Installing dependencies
+
+### Train models
+### Test models in a game
+
 ## Explanation of Actor-Critic Learning
 
 ## Explanation of Monte-Carlo-Tree Search
