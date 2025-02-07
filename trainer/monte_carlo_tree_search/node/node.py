@@ -10,10 +10,10 @@ class Node:
 
     def __init__(self, player, prior):
         """
-        | Initializes the node TODO explain-constructor
-        |
-        | :param player: the player making the move
-        | :param prior:
+        Initializes the node TODO explain-constructor
+
+        :param player: the player making the move
+        :param prior:
         """
 
         self.visit_count = 0
@@ -25,10 +25,10 @@ class Node:
 
     def expanded(self):
         """
-        | Check the number of children the node has, if has any,
-        | that means that the node has been expanded.
+        Check the number of children the node has, if has any,
+        that means that the node has been expanded.
         |
-        | :return: boolean whether the node is expanded
+        :return: boolean whether the node is expanded
         """
 
         return len(self.children) > 0
@@ -46,13 +46,13 @@ class Node:
 
     def select_action(self, temperature):
         """
-        | Select an action from the tree rollout (TODO check) TODO explain-action
-        |
-        | :param temperature: parameter to adjust the randomness of the action choice,
-        |                    0 - deterministic action based on the visit counts,
-        |                    infinity - action choice with uniform probabilities,
-        |                    in-between - probabilities dependent on the visit count
-        | :return: the selected action of the tree
+        Select an action from the tree rollout (TODO check) TODO explain-action
+
+        :param temperature: parameter to adjust the randomness of the action choice,
+                            0 - deterministic action based on the visit counts,
+                           infinity - action choice with uniform probabilities,
+                           in-between - probabilities dependent on the visit count
+        :return: the selected action of the tree
         """
 
         # Get the visit counts of all children and the respective actions that lead to them
@@ -111,7 +111,6 @@ class Node:
     def select_child(self, env, path_length, start_player):
         """
 
-
         :param env:
         :param path_length:
         :param start_player:
@@ -143,13 +142,13 @@ class Node:
 
     def expand(self, state, player, action_probs):
         """
-        | Expand this node by creating children nodes
-        | with all the possible actions arising from this node,
-        | i.e. all actions with non-zero probability.
+        Expand this node by creating children nodes
+        with all the possible actions arising from this node,
+        i.e. all actions with non-zero probability.
 
-        | :param state: TODO what-state-doesnt-seem-useful
-        | :param player: TODO seems-weird
-        | :param action_probs: probabilities of the actions arising in the parent node's state
+        :param state: TODO what-state-doesnt-seem-useful
+        :param player: TODO seems-weird
+        :param action_probs: probabilities of the actions arising in the parent node's state
         """
 
         self.player = player

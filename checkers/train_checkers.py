@@ -1,5 +1,5 @@
 from checkers.checkers_env.env_parameters.checkers_env_parameters import board_parameters, draw_parameters
-from checkers_parameters.checkers_parameters import trainer_parameters, actor_critic_parameters
+from checkers.checkers_parameters.checkers_parameters import trainer_parameters, actor_critic_parameters
 from trainer.rl_trainer import TrainerActorCriticV2
 
 

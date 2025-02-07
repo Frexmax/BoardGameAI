@@ -1,11 +1,11 @@
 import numpy as np
 from numba import jit
 
+@jit(nopython=True, fastmath=True)
 def apply_dirichlet_noise(action_probs, alpha, epsilon, action_space):
     return (1 - epsilon) * action_probs + epsilon * np.random.dirichlet([alpha]*action_space)
 
-
-@jit(nopython=True, fastmath=True)
+# @jit(nopython=True, fastmath=True)
 def normalize_action(action_space, valid_moves, action_probs):
     """
     # TODO document-normalize
@@ -15,6 +15,9 @@ def normalize_action(action_space, valid_moves, action_probs):
     :param action_probs:
     :return:
     """
+
+    print(action_space)
+    print(valid_moves)
 
     for i in range(action_space):
         if i not in valid_moves:

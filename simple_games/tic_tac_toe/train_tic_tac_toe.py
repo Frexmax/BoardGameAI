@@ -1,6 +1,6 @@
 from trainer.rl_trainer import TrainerActorCriticV2
-from tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
-from tic_tac_toe_parameters.tic_tac_toe_parameters import trainer_parameters, actor_critic_parameters
+from simple_games.tic_tac_toe.tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
+from simple_games.tic_tac_toe.tic_tac_toe_parameters.tic_tac_toe_parameters import trainer_parameters, actor_critic_parameters
 
 
 def train_tic_tac_toe():

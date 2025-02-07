@@ -10,17 +10,10 @@ from checkers.checkers_env.env_parameters.checkers_env_parameters import board_p
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 
-with open("saved_models/saved_logs/log-CHECKERS-month-6-day-9-ep-154647-50.0%.pkl", "rb") as logger_file:
-    logger = pickle.load(logger_file)
-logger.graph_log()
 
-
-def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight):
+def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight, model_name):
     env = CheckersEnv(board_parameters, draw_parameters, to_render=True)
-    model = SelfPlayModel("saved_models/actor-critic-CHECKERS-month-6-day-9-ep-154647-50%.h5")
-    with open("saved_models/saved_logs/log-CHECKERS-month-6-day-9-ep-154647-50.0%.pkl", "rb") as logger_file:
-        logger = pickle.load(logger_file)
-    logger.graph_log()
+    model = SelfPlayModel(f"./checkers/saved_models/{model_name}")
     for episode in range(episodes):
         reward = 0
         done = False
@@ -84,10 +77,11 @@ def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight)
         print(f"LAST PLAYER: {env.player}, REWARD: {reward}")
         print("==================================================")
 
-
+"""
 HUMAN = True
 EPISODES = 5
 NUM_SIMULATIONS = 100
 AI_PLAYER = 1
 
 test_checkers(HUMAN, EPISODES, NUM_SIMULATIONS, AI_PLAYER, 0.5)
+"""

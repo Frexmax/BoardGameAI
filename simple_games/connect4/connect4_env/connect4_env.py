@@ -26,7 +26,7 @@ class Connect4Env:
         """
 
         # Load the list for the optimal first 7 moves from any position
-        with open('connect4_env/moves_list/optimal_start_moves.pkl', 'rb') as f:
+        with open('./simple_games/connect4/connect4_env/moves_list/optimal_start_moves.pkl', 'rb') as f:
             self.optimal_start_moves = pickle.load(f)
         self.optimal_move_count = 7
 

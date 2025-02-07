@@ -2,15 +2,15 @@ import time
 import random
 import pygame as pg
 
-from tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
+from simple_games.tic_tac_toe.tic_tac_toe_env.tic_tac_toe_env import TicTacToeEnv
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
-from tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
+from simple_games.tic_tac_toe.tic_tac_toe_env.env_parameters.tic_tac_toe_env_parameters import board_parameters, draw_parameters
 
 
-def test_tic_tac_toe(human, episodes, num_simulations, ai_player):
+def test_tic_tac_toe(human, episodes, num_simulations, ai_player, model_name):
     env = TicTacToeEnv(board_parameters, draw_parameters, to_render=True)
-    model = SelfPlayModel("saved_models/actor-critic-TIC_TAC_TOE-month-11-day-9-ep-0-0%.h5")
+    model = SelfPlayModel(f"./tic_tac_toe/saved_models/{model_name}")
     for episode in range(episodes):
         done = False
         current_state, actions_index = env.reset()

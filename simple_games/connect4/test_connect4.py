@@ -3,8 +3,8 @@ import random
 
 import pygame as pg
 
-from connect4_env.connect4_env import Connect4Env
-from connect4_env.env_parameters.connect4_env_parameters import board_parameters, draw_parameters
+from simple_games.connect4.connect4_env.connect4_env import Connect4Env
+from simple_games.connect4.connect4_env.env_parameters.connect4_env_parameters import board_parameters, draw_parameters
 from trainer.self_play_model.self_play_model import SelfPlayModel
 from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTreeSearch
 
@@ -14,9 +14,9 @@ NUM_SIMULATIONS = 10
 AI_PLAYER = 1
 
 
-def test_connect4(human, episodes, num_simulations, ai_player):
+def test_connect4(human, episodes, num_simulations, ai_player, model_name):
     env = Connect4Env(board_parameters, draw_parameters, to_render=True)
-    model = SelfPlayModel("saved_models/actor-critic--month-5-day-23-7-100%.h5")
+    model = SelfPlayModel(f"./simple_games/connect4/{model_name}")
     for episode in range(EPISODES):
         done = False
         reward = 0
@@ -65,4 +65,4 @@ def test_connect4(human, episodes, num_simulations, ai_player):
         print("====================================================")
 
 
-test_connect4(HUMAN, EPISODES, NUM_SIMULATIONS, AI_PLAYER)
+# test_connect4(HUMAN, EPISODES, NUM_SIMULATIONS, AI_PLAYER)

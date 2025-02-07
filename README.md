@@ -27,9 +27,26 @@ The games themselves, which also function as reinforcement learning training env
 ## Running the Program
 
 ### Installing dependencies
+```cmd
+pip install -r requirements.txt
+```
 
 ### Train models
+```cmd
+make train game:=<game name>
+```
+
 ### Test models in a game
+```cmd
+make test game:=<game name> human:=<is human> eps:=<ep count> 
+                num_sim:=<MCTS sim num> ai_player:=<which player ai> heuristic_w:=<heuristic weight (0-1)>
+                model_name:=<model name>
+```
+
+### View training logs
+```cmd
+make make view-log game:=<game name> log_name:=<log name>
+```
 
 ## Explanation of Actor-Critic Learning
 

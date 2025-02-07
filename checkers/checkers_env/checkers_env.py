@@ -16,10 +16,10 @@ class CheckersEnv:
     """
 
     def __init__(self, board_parameters, draw_parameters, to_render=False):
-        with open('checkers_env/moves_list/captures_list.pkl', 'rb') as f:
+        with open('./checkers/checkers_env/moves_list/captures_list.pkl', 'rb') as f:
             self.captures_list = pickle.load(f)
 
-        with open('checkers_env/moves_list/moves_list.pkl', 'rb') as f:
+        with open('./checkers/checkers_env/moves_list/moves_list.pkl', 'rb') as f:
             self.moves_list = pickle.load(f)
 
         self.optimal_move_count = -1
