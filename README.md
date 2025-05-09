@@ -47,10 +47,3 @@ make test game:=<game name> human:=<is human> eps:=<ep count>
 ```cmd
 make make view-log game:=<game name> log_name:=<log name>
 ```
-
-## Explanation of Actor-Critic Learning
-
-## Explanation of Monte-Carlo-Tree Search
-
-## Technical Documentation
-If you are interested in more detail about how the code works, please visit the docs section of the repository
