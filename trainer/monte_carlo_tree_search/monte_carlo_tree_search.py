@@ -70,9 +70,6 @@ class MonteCarloTreeSearch:
         # or the allocated time has elapsed
         # TODO check-time-tracking
         while self.budget > num_rollouts and self.budget > time_taken:
-            print(self.budget, num_rollouts, time_taken)
-
-
             node = root
             search_path = [node]
 
