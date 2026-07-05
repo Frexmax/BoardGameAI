@@ -33,14 +33,14 @@ class Connect4Env:
         # The starting player is set to 1, the second (enemy) set to -1
         # The values of player and enemy interchange, depending on who is about to play
         self.player = 1
-        self.enemy = -1
+        self._enemy = -1
 
         # Amount of pieces you need connected to win
-        self.piece_count_for_win = 4
+        self._piece_count_for_win = 4
 
         # Information used for reinforcement learning
         # observation space - dimensions of the game state
-        self.observation_space = (6, 7)
+        self._observation_space = (6, 7)
 
         # refactored space - modified game state used for model training
         self.refactored_space = (2, 6, 7)
@@ -65,9 +65,16 @@ class Connect4Env:
         self.board = Board(board_parameters, draw_parameters, self.moves, to_render)
 
     def reset(self):
+        """
+        Reset the game state when starting a new round.
+        Reset the board and make player 1 play the next turn
+
+        :return: game state of the reset board, possible moves to play
+        """
+
         self.move_counter = 0
         self.player = 1
-        self.enemy = -1
+        self._enemy = -1
         self.board.reset()
         return np.copy(self.board.np_board), self.find_moves(self.board.np_board, 1, positions=None)
 
@@ -126,7 +133,7 @@ class Connect4Env:
         hash_value = hash(array)
         return hash_value
 
-    def check_win(self, state, player):
+    def _check_win(self, state, player):
         """
         Check for game win for the last player based on the provided game state.
         5 conditions checked:
@@ -151,8 +158,8 @@ class Connect4Env:
         for row in range(6):
             for window_num in range(4):
                 # Create an array with the next four cells on the row, starting from window_num
-                window = state[row, window_num:window_num + self.piece_count_for_win]
-                if np.count_nonzero(window == player) == self.piece_count_for_win:
+                window = state[row, window_num:window_num + self._piece_count_for_win]
+                if np.count_nonzero(window == player) == self._piece_count_for_win:
                     win_state = player
                     game_over = True
                     return game_over, win_state
@@ -161,8 +168,8 @@ class Connect4Env:
         for column in range(7):
             for window_num in range(3):
                 # Create an array with the next four cells on the column, starting from window_num
-                window = state[window_num:window_num + self.piece_count_for_win, column]
-                if np.count_nonzero(window == player) == self.piece_count_for_win:
+                window = state[window_num:window_num + self._piece_count_for_win, column]
+                if np.count_nonzero(window == player) == self._piece_count_for_win:
                     win_state = player
                     game_over = True
                     return game_over, win_state
@@ -175,7 +182,7 @@ class Connect4Env:
                                      state[1 + x, 1 + y],
                                      state[2 + x, 2 + y],
                                      state[3 + x, 3 + y]])
-                if np.count_nonzero(diagonal == player) == self.piece_count_for_win:
+                if np.count_nonzero(diagonal == player) == self._piece_count_for_win:
                     win_state = player
                     game_over = True
                     return game_over, win_state
@@ -184,17 +191,17 @@ class Connect4Env:
         for y in range(4):
             for x in range(3):
                 # Create an array with the next four cells on the increasing diagonal, starting from coordinate (x, y)
-                diagonal = np.array([state[x, self.observation_space[0] - y],
-                                     state[1 + x, (self.observation_space[0] - 1) - y],
-                                     state[2 + x, (self.observation_space[0] - 2) - y],
-                                     state[3 + x, (self.observation_space[0] - 3) - y]])
-                if np.count_nonzero(diagonal == player) == self.piece_count_for_win:
+                diagonal = np.array([state[x, self._observation_space[0] - y],
+                                     state[1 + x, (self._observation_space[0] - 1) - y],
+                                     state[2 + x, (self._observation_space[0] - 2) - y],
+                                     state[3 + x, (self._observation_space[0] - 3) - y]])
+                if np.count_nonzero(diagonal == player) == self._piece_count_for_win:
                     win_state = player
                     game_over = True
                     return game_over, win_state
 
         # 5. Check if the whole board is filled, if so, then end game
-        if np.count_nonzero(state != 0) == self.observation_space[0] * self.observation_space[1]:
+        if np.count_nonzero(state != 0) == self._observation_space[0] * self._observation_space[1]:
             win_state = 0
             game_over = True
             return game_over, win_state
@@ -214,7 +221,7 @@ class Connect4Env:
         next_state = self.board.make_move(action, player, np.copy(state), to_render=None)
         return np.copy(next_state)
 
-    def filter_moves(self, moves):
+    def _filter_moves(self, moves):
         """
         Map every move from the provided list of moves
         to the corresponding index in the game's list of all moves
@@ -244,13 +251,23 @@ class Connect4Env:
         return [None]
 
     def find_moves(self, state, player, positions):
+        """
+        Find the possible moves from a game state.
+        A valid move is the lowest empty cell in a column
+
+        :param state: state of the game
+        :param player: player who is now to play (not necessary for connect4, only for compatibility reasons)
+        :param positions: position of pieces (not necessary for connect4, only for compatibility reasons)
+        :return: list of possible moves for the provided game state
+        """
+
         moves = []
         for column in range(7):
             for row in reversed(range(6)):
                 if state[row, column] == 0:
                     moves.append((row, column))
                     break
-        return self.filter_moves(moves)
+        return self._filter_moves(moves)
 
     def state_reward(self, state, player, move_counter):
         """
@@ -263,13 +280,13 @@ class Connect4Env:
         :return: reward for the state, boolean indicating game over, moves possible for the state
         """
 
-        game_end, win_state = self.check_win(state, player)
-        reward = self.give_reward(win_state)
+        game_end, win_state = self._check_win(state, player)
+        reward = self._give_reward(win_state)
         next_actions = self.find_moves(state, player, positions=None)
         return reward, game_end, next_actions
 
     @staticmethod
-    def give_reward(win_state):
+    def _give_reward(win_state):
         """
         Grant reward based on the winner of the game (1 or -1),
         if no winner, then there is no reward
@@ -321,16 +338,16 @@ class Connect4Env:
         next_actions = self.find_moves(self.board.np_board, self.player, positions=None)
 
         # Check if game over and who may have won, after making the provided move
-        game_end, win_state = self.check_win(self.board.np_board, self.player)
+        game_end, win_state = self._check_win(self.board.np_board, self.player)
 
         # Give the reward for the move
-        reward = self.give_reward(win_state)
+        reward = self._give_reward(win_state)
 
         # Update move counter, after move is made
         self.move_counter += 1
 
         # Swap the player and enemy values, for next turn (as the player making move switches)
         self.player *= -1
-        self.enemy *= -1
+        self._enemy *= -1
 
         return np.copy(self.board.np_board), reward, game_end, next_actions

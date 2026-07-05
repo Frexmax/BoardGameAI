@@ -71,7 +71,7 @@ class Node:
         return action
 
     @staticmethod
-    def check_winning_moves(env, action, state, player):
+    def _check_winning_moves(env, action, state, player):
         """
         Check if the action is winning by playing it out in the environment.
 
@@ -89,7 +89,7 @@ class Node:
         return None
 
     @staticmethod
-    def select_dict_action(env, state, path_length, start_player, current_player):
+    def _select_dict_action(env, state, path_length, start_player, current_player):
         """
         TODO explain-dict-action
 
@@ -122,7 +122,7 @@ class Node:
         best_action = -1
         best_child = None
 
-        # dict_action = self.select_dict_action(env, self.state, path_length, start_player, -self.player)
+        # dict_action = self._select_dict_action(env, self.state, path_length, start_player, -self.player)
         dict_action = False  # CHANGE DUE TO HASH COLLISIONS
         if dict_action:
             best_action = dict_action
@@ -130,7 +130,7 @@ class Node:
 
         else:
             for action, child in self.children.items():
-                winning_action = self.check_winning_moves(env, action, self.state, child.player)
+                winning_action = self._check_winning_moves(env, action, self.state, child.player)
                 if winning_action is not None:
                     return winning_action, child
                 score = ucb_score(c, self.visit_count, child.prior, child.value(), child.visit_count)

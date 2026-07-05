@@ -9,6 +9,17 @@ from simple_games.tic_tac_toe.tic_tac_toe_env.env_parameters.tic_tac_toe_env_par
 
 
 def test_tic_tac_toe(human, episodes, num_simulations, ai_player, model_name):
+    """
+    Play a number of tic-tac-toe games against a trained model, either as a human (using mouse controls)
+    or a random agent, with the model's moves chosen using Monte-Carlo-Tree Search
+
+    :param human: flag whether the non-AI player is controlled by a human (mouse clicks) or plays randomly
+    :param episodes: number of games to play
+    :param num_simulations: number of simulation steps to be run in the Monte-Carlo-Tree Search
+    :param ai_player: which player (1 or -1) is controlled by the trained model
+    :param model_name: filename of the trained model to load
+    """
+
     env = TicTacToeEnv(board_parameters, draw_parameters, to_render=True)
     model = SelfPlayModel(f"./tic_tac_toe/saved_models/{model_name}")
     for episode in range(episodes):

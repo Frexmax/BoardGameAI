@@ -37,12 +37,12 @@ class Board:
         """
 
         # Store board parameters in the class
-        self.width = board_parameters["BOARD_WIDTH"]
-        self.height = board_parameters["BOARD_HEIGHT"]
-        self.border_width = board_parameters["BORDER_WIDTH"]
+        self._width = board_parameters["BOARD_WIDTH"]
+        self._height = board_parameters["BOARD_HEIGHT"]
+        self._border_width = board_parameters["BORDER_WIDTH"]
 
         # Initialize the Drawer class
-        self.drawer = Drawer(draw_parameters)
+        self._drawer = Drawer(draw_parameters)
 
         # Initialize the NumPy board
         self.np_board = np.zeros((8, 8))
@@ -53,17 +53,17 @@ class Board:
         if self.to_render:
             # If the board should be rendered, then calculate size of each cell
             # and the grid PyGame pixel coordinates
-            self.pg_board = pg.Surface((self.width - self.border_width, self.height - self.border_width))
-            self.cell_size = ((self.width - self.border_width) // 8,
-                              (self.height - self.border_width) // 8)
-            self.centre_of_cells = {}
+            self._pg_board = pg.Surface((self._width - self._border_width, self._height - self._border_width))
+            self.cell_size = ((self._width - self._border_width) // 8,
+                              (self._height - self._border_width) // 8)
+            self._centre_of_cells = {}
         else:
             # If the board will not be rendered, then there is no need to keep any data necessary for rendering,
             # therefore the attributes can be simply assigned to None
             self.cell_size = None
-            self.centre_offset = None
-            self.centre_of_cells = None
-            self.pg_board = None
+            self._centre_offset = None
+            self._centre_of_cells = None
+            self._pg_board = None
 
     def reset(self):
         """
@@ -72,8 +72,8 @@ class Board:
         """
 
         if self.to_render:
-            self.initialize_display()
-        self.initialize_board()
+            self._initialize_display()
+        self._initialize_board()
 
     def render(self, player):
         """
@@ -87,15 +87,15 @@ class Board:
             pg.init()
 
             # Create display (PyGame window)
-            game_display = pg.display.set_mode((self.width, self.height))
+            game_display = pg.display.set_mode((self._width, self._height))
             pg.display.set_caption("CheckersBoard")
 
             # Place the board on the newly created display
-            game_display.blit(self.pg_board, self.pg_board.get_rect(center=(self.width // 2, self.height // 2)))
+            game_display.blit(self._pg_board, self._pg_board.get_rect(center=(self._width // 2, self._height // 2)))
 
             # Draw both the standard border and the player turn border
-            self.drawer.draw_border(game_display, self.width, self.height, self.border_width)
-            self.drawer.draw_player_border(game_display, self.width, self.height, self.border_width, player)
+            self._drawer.draw_border(game_display, self._width, self._height, self._border_width)
+            self._drawer.draw_player_border(game_display, self._width, self._height, self._border_width, player)
             pg.display.update()
         else:
             warnings.warn("Can't render without display. Set 'to_render' = True")
@@ -117,13 +117,13 @@ class Board:
             start_piece_type = highlighted_before["piece_type"]
 
             # Remove old highlight
-            self.drawer.remove_highlight(self.pg_board, start_coords_rectangle[0], start_coords_rectangle[1],
+            self._drawer.remove_highlight(self._pg_board, start_coords_rectangle[0], start_coords_rectangle[1],
                                          start_coords_piece[0], start_coords_piece[1], start_piece_type,
                                          player, self.cell_size)
 
             # Remove all dots indicating possible moves
             for dot_coord in start_coords_dot:
-                self.drawer.remove_dot(self.pg_board, dot_coord[0] * self.cell_size[0],
+                self._drawer.remove_dot(self._pg_board, dot_coord[0] * self.cell_size[0],
                                        dot_coord[1] * self.cell_size[1], self.cell_size)
 
     def highlight_piece(self, click_position, player, highlighted_before, possible_moves, moves_list):
@@ -145,7 +145,7 @@ class Board:
             # If the mouse click is outside the board grid, then return False
             return False
 
-        coords_piece = self.centre_of_cells[(x, y)]
+        coords_piece = self._centre_of_cells[(x, y)]
         coords_rectangle = (y * self.cell_size[0], x * self.cell_size[1])
         piece_type = abs(self.np_board[x][y])
 
@@ -162,7 +162,7 @@ class Board:
             return False
 
         # Highlight the selected grid cell
-        self.drawer.add_highlight(self.pg_board, coords_rectangle[0], coords_rectangle[1], coords_piece[0],
+        self._drawer.add_highlight(self._pg_board, coords_rectangle[0], coords_rectangle[1], coords_piece[0],
                                   coords_piece[1], piece_type, player, self.cell_size)
 
         # Get the possible moves for the highlighted piece and draw dots indicating these moves on the display
@@ -170,20 +170,20 @@ class Board:
         for action in possible_moves:
             if moves_list[action][0] == (x, y):
                 end_pos = moves_list[action][-1]
-                self.drawer.add_dot(self.pg_board, self.centre_of_cells[end_pos][0],
-                                    self.centre_of_cells[end_pos][1])
+                self._drawer.add_dot(self._pg_board, self._centre_of_cells[end_pos][0],
+                                    self._centre_of_cells[end_pos][1])
                 dot_coords.append(end_pos[::-1])
 
         return {"board_piece_coordinates": (x, y), "piece_coordinates": coords_piece,
                 "rectangle_coordinates": coords_rectangle, "dot_coordinates": dot_coords, "piece_type": piece_type}
 
-    def initialize_display(self):
+    def _initialize_display(self):
         """
         Initialize the PyGame Surface, by drawing the checkers grid and
         calculating the center of grid cells
         """
 
-        self.drawer.fill_display(self.pg_board, self.drawer.WHITE)
+        self._drawer.fill_display(self._pg_board, self._drawer.WHITE)
 
         for x in range(8):
             for y in range(8):
@@ -198,15 +198,15 @@ class Board:
                         x_pixel = x * self.cell_size[0]
 
                     # Draw the black grid cells, on a white background
-                    self.drawer.draw_rectangle(self.pg_board, x_pixel, y_pixel,
-                                               self.cell_size[0], self.cell_size[1], self.drawer.BLACK)
+                    self._drawer.draw_rectangle(self._pg_board, x_pixel, y_pixel,
+                                               self.cell_size[0], self.cell_size[1], self._drawer.BLACK)
 
                 if self.to_render:
                     # Get the centre of a given cell
-                    self.centre_of_cells[(x, y)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
+                    self._centre_of_cells[(x, y)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
                                                     self.cell_size[0] // 2 + x * self.cell_size[0])
 
-    def initialize_board(self):
+    def _initialize_board(self):
         """
         First reset the numpy board, by setting all cells to 0,
         and then place the starting pieces for both players.
@@ -225,10 +225,10 @@ class Board:
             """
 
             if self.to_render:
-                centre = self.centre_of_cells[(piece_x, piece_y)]
+                centre = self._centre_of_cells[(piece_x, piece_y)]
                 pixel_x = centre[0]
                 pixel_y = centre[1]
-                self.drawer.draw_piece(self.pg_board, pixel_x, pixel_y, player)
+                self._drawer.draw_piece(self._pg_board, pixel_x, pixel_y, player)
             self.np_board[piece_x][piece_y] = -1
 
         self.np_board.fill(0)
@@ -286,10 +286,10 @@ class Board:
 
         if to_render:
             # If the board has to be rendered, then get the pixel values for old and new piece coordinates
-            start_pixel_x = self.centre_of_cells[starting_position][0]
-            start_pixel_y = self.centre_of_cells[starting_position][1]
-            new_pixel_x = self.centre_of_cells[new_position][0]
-            new_pixel_y = self.centre_of_cells[new_position][1]
+            start_pixel_x = self._centre_of_cells[starting_position][0]
+            start_pixel_y = self._centre_of_cells[starting_position][1]
+            new_pixel_x = self._centre_of_cells[new_position][0]
+            new_pixel_y = self._centre_of_cells[new_position][1]
         else:
             start_pixel_x = None
             start_pixel_y = None
@@ -298,24 +298,24 @@ class Board:
 
         if to_render:
             # Remove the piece at old position, if the game is being rendered
-            self.drawer.remove_piece(self.pg_board, start_pixel_x, start_pixel_y)
+            self._drawer.remove_piece(self._pg_board, start_pixel_x, start_pixel_y)
 
         # Set the old piece position to 0, indicating empty space
         state[starting_position] = 0
 
         if len(captures) == 0:
-            self.make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)
+            self._make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)
 
         else:
             # If a capture has been made
-            self.make_capture_move(state, piece_type, player, new_position,
+            self._make_capture_move(state, piece_type, player, new_position,
                                    new_pixel_x, new_pixel_y, captures, to_render)
 
-        new_king_position = self.check_new_king_made(state, player, new_position, new_pixel_x, new_pixel_y, to_render)
+        new_king_position = self._check_new_king_made(state, player, new_position, new_pixel_x, new_pixel_y, to_render)
 
         return np.copy(state), new_king_position
 
-    def check_new_king_made(self, state, player, new_position, new_pixel_x, new_pixel_y, to_render):
+    def _check_new_king_made(self, state, player, new_position, new_pixel_x, new_pixel_y, to_render):
         """
         Check if a new king has been made during the move.
         This check is made by looking at the new position of the moved piece.
@@ -336,10 +336,10 @@ class Board:
             state[new_position] = 2 * player
             new_king_position = (new_position[0], new_position[1])
             if to_render:
-                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)
+                self._drawer.draw_king(self._pg_board, new_pixel_x, new_pixel_y, player)
         return new_king_position
 
-    def make_no_capture_move(self, state, piece_type, player,
+    def _make_no_capture_move(self, state, piece_type, player,
                              new_position, new_pixel_x, new_pixel_y, to_render):
         """
         Move a piece with no captures.
@@ -360,15 +360,15 @@ class Board:
             # Draw the standard piece to the display, if the game is being rendered
             state[new_position] = player
             if to_render:
-                self.drawer.draw_piece(self.pg_board, new_pixel_x, new_pixel_y, player)
+                self._drawer.draw_piece(self._pg_board, new_pixel_x, new_pixel_y, player)
         else:
             # Set in the numpy board the value for the king piece (-2 or 2, double to player value)
             # Draw the king piece to the display, if the game is being rendered
             state[new_position] = 2 * player
             if to_render:
-                self.drawer.draw_king(self.pg_board, new_pixel_x, new_pixel_y, player)
+                self._drawer.draw_king(self._pg_board, new_pixel_x, new_pixel_y, player)
 
-    def make_capture_move(self, state, piece_type, player, new_position,
+    def _make_capture_move(self, state, piece_type, player, new_position,
                           new_pixel_x, new_pixel_y, captures, to_render):
         """
         Move a piece with captures.
@@ -392,13 +392,12 @@ class Board:
         for capture in captures:
             if to_render:
                 # If the game is being rendered, remove the capture piece from the display
-                capture_pixel_x = self.centre_of_cells[capture][0]
-                capture_pixel_y = self.centre_of_cells[capture][1]
-                # self.drawer.remove_piece(self.pg_board, start_pixel_x, start_pixel_y)
-                self.drawer.remove_piece(self.pg_board, capture_pixel_x, capture_pixel_y)
+                capture_pixel_x = self._centre_of_cells[capture][0]
+                capture_pixel_y = self._centre_of_cells[capture][1]
+                self._drawer.remove_piece(self._pg_board, capture_pixel_x, capture_pixel_y)
 
             # Set the captured position to 0, indicating empty space
             state[capture] = 0
 
         # Move the piece without any captures
-        self.make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)
+        self._make_no_capture_move(state, piece_type, player, new_position, new_pixel_x, new_pixel_y, to_render)

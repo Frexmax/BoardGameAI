@@ -17,6 +17,13 @@ import pickle
 
 
 def check_valid(captures_):
+    """
+    Check that a capture sequence does not capture the same position more than once
+
+    :param captures_: sequence of captured positions along a move
+    :return: True, if every captured position is unique, else False
+    """
+
     for element in captures_:
         if captures_.count(element) > 1:
             return False
@@ -24,6 +31,13 @@ def check_valid(captures_):
 
 
 def no_capture_moves():
+    """
+    Generate every possible non-capturing move on an empty 8 x 8 board,
+    by moving one square diagonally in any of the 4 directions from every starting position
+
+    :return: list of every possible non-capturing move, None (no captures are associated with these moves)
+    """
+
     move_list_n = []
     directions = [(-1, -1), (-1, 1), (1, 1), (1, -1)]
     for x1 in range(8):
@@ -39,6 +53,17 @@ def no_capture_moves():
 
 
 def capture_1():
+    """
+    Generate every possible move on an empty 8 x 8 board that captures exactly 1 piece,
+    by jumping two squares diagonally in any of the 4 directions from every starting position.
+
+    capture_2 through capture_9 follow this same pattern, chaining N jumps in a row to capture
+    N pieces and discarding any chain that would capture the same position twice; capture_10 is
+    the special case for the maximum possible chain length and uses sets instead of lists
+
+    :return: list of every possible 1-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions_captures = [(-1, -1), (-1, 1), (1, 1), (1, -1)]
@@ -60,6 +85,12 @@ def capture_1():
 
 
 def capture_2():
+    """
+    Generate every possible 2-piece capture chain (see capture_1).
+
+    :return: list of every possible 2-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions_captures = [(-1, -1), (-1, 1), (1, 1), (1, -1)]
@@ -87,6 +118,12 @@ def capture_2():
 
 
 def capture_3():
+    """
+    Generate every possible 3-piece capture chain (see capture_1).
+
+    :return: list of every possible 3-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -119,6 +156,12 @@ def capture_3():
 
 
 def capture_4():
+    """
+    Generate every possible 4-piece capture chain (see capture_1).
+
+    :return: list of every possible 4-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -157,6 +200,12 @@ def capture_4():
 
 
 def capture_5():
+    """
+    Generate every possible 5-piece capture chain (see capture_1).
+
+    :return: list of every possible 5-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -202,6 +251,12 @@ def capture_5():
 
 
 def capture_6():
+    """
+    Generate every possible 6-piece capture chain (see capture_1).
+
+    :return: list of every possible 6-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -253,6 +308,12 @@ def capture_6():
 
 
 def capture_7():
+    """
+    Generate every possible 7-piece capture chain (see capture_1).
+
+    :return: list of every possible 7-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -310,6 +371,12 @@ def capture_7():
 
 
 def capture_8():
+    """
+    Generate every possible 8-piece capture chain (see capture_1).
+
+    :return: list of every possible 8-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -373,6 +440,12 @@ def capture_8():
 
 
 def capture_9():
+    """
+    Generate every possible 9-piece capture chain (see capture_1).
+
+    :return: list of every possible 9-piece capturing move, list of the corresponding captured positions
+    """
+
     move_list_n = []
     captures_list_n = []
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]
@@ -446,6 +519,13 @@ def capture_9():
 
 
 def capture_10():
+    """
+    Generate every possible 10-piece capture chain, the maximum possible chain length (see capture_1).
+    Uses sets instead of lists since duplicate chains are more common at this depth
+
+    :return: set of every possible 10-piece capturing move, set of the corresponding captured positions
+    """
+
     move_list_n = set()
     captures_list_n = set()
     directions = [(-2, -2), (-2, 2), (2, 2), (2, -2)]

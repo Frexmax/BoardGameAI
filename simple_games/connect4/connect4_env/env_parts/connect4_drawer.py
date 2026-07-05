@@ -19,19 +19,19 @@ class Drawer:
 
         # Store basic size parameters for the shapes
         self.piece_radius = draw_parameters["PIECE_R"]
-        self.border_radius = draw_parameters["BORDER_R"]
-        self.dot_radius = draw_parameters["DOT_R"]
+        self._border_radius = draw_parameters["BORDER_R"]
+        self._dot_radius = draw_parameters["DOT_R"]
 
         # Store colors for the shapes, highlights and borders
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.DARK_BLUE_BACKGROUND = (10, 7, 148)
-        self.player_colors = {1: draw_parameters["RED_PLAYER_PIECE_COLOR"],
+        self._player_colors = {1: draw_parameters["RED_PLAYER_PIECE_COLOR"],
                               -1: draw_parameters["BLACK_PLAYER_PIECE_COLOR"]}
-        self.player_border_colors = {1: draw_parameters["RED_PLAYER_BORDER_COLOR"],
+        self._player_border_colors = {1: draw_parameters["RED_PLAYER_BORDER_COLOR"],
                                      -1: draw_parameters["BLACK_PLAYER_BORDER_COLOR"]}
-        self.highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
-        self.border_color = draw_parameters["BORDER_COLOR"]
+        self._highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
+        self._border_color = draw_parameters["BORDER_COLOR"]
 
     def draw_border(self, display, width, height, border_width):
         """
@@ -44,7 +44,7 @@ class Drawer:
         :param border_width: thickness of the border to be drawn
         """
 
-        pg.draw.rect(display, self.border_color, (0, 0, width, height), border_width // 2)
+        pg.draw.rect(display, self._border_color, (0, 0, width, height), border_width // 2)
 
     def draw_player_border(self, display, width, height, border_width, player):
         """
@@ -59,7 +59,7 @@ class Drawer:
         :param player: player who is about to play
         """
 
-        pg.draw.rect(display, self.player_border_colors[player], (0, 0, width, height), border_width // 4)
+        pg.draw.rect(display, self._player_border_colors[player], (0, 0, width, height), border_width // 4)
 
     @staticmethod
     def fill_display(display, color):
@@ -98,10 +98,10 @@ class Drawer:
         :param player: player who is now to play
         """
 
-        color = self.player_colors[player]
-        border_color = self.player_border_colors[player]
+        color = self._player_colors[player]
+        border_color = self._player_border_colors[player]
         pg.draw.circle(display, color, (x, y), self.piece_radius)
-        pg.draw.circle(display, border_color, (x, y), self.piece_radius, self.border_radius)
+        pg.draw.circle(display, border_color, (x, y), self.piece_radius, self._border_radius)
 
     def remove_piece(self, display, x, y):
         """
@@ -124,7 +124,7 @@ class Drawer:
         :param y: y coordinate of the center of the dot
         """
 
-        pg.draw.circle(display, self.highlight_color, (x, y), self.dot_radius)
+        pg.draw.circle(display, self._highlight_color, (x, y), self._dot_radius)
 
     def remove_dot(self, display, x, y):
         """
@@ -136,4 +136,4 @@ class Drawer:
         :param y: y coordinate of the center of the dot
         """
 
-        pg.draw.circle(display, self.WHITE, (x, y), self.dot_radius)
+        pg.draw.circle(display, self.WHITE, (x, y), self._dot_radius)

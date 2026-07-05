@@ -18,22 +18,22 @@ class Drawer:
         """
 
         # Store basic size parameters for the shapes
-        self.dot_radius = draw_parameters["DOT_R"]
-        self.circle_radius = draw_parameters["CIRCLE_R"]
-        self.inner_circle_radius = draw_parameters["INNER_CIRCLE_R"]
-        self.cross_width = draw_parameters["CROSS_WIDTH"]
-        self.cross_height = draw_parameters["CROSS_HEIGHT"]
-        self.cross_line_width = draw_parameters["CROSS_LINE_WIDTH"]
+        self._dot_radius = draw_parameters["DOT_R"]
+        self._circle_radius = draw_parameters["CIRCLE_R"]
+        self._inner_circle_radius = draw_parameters["INNER_CIRCLE_R"]
+        self._cross_width = draw_parameters["CROSS_WIDTH"]
+        self._cross_height = draw_parameters["CROSS_HEIGHT"]
+        self._cross_line_width = draw_parameters["CROSS_LINE_WIDTH"]
 
         # Store colors for the shapes, highlights and borders
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
-        self.border_color = draw_parameters["BORDER_COLOR"]
-        self.cross_player_border_color = draw_parameters["CROSS_PLAYER_BORDER_COLOR"]
-        self.circle_player_border_color = draw_parameters["CIRCLE_PLAYER_BORDER_COLOR"]
-        self.cross_color = draw_parameters["CROSS_COLOR"]
-        self.circle_color = draw_parameters["CIRCLE_COLOR"]
-        self.highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
+        self._border_color = draw_parameters["BORDER_COLOR"]
+        self._cross_player_border_color = draw_parameters["CROSS_PLAYER_BORDER_COLOR"]
+        self._circle_player_border_color = draw_parameters["CIRCLE_PLAYER_BORDER_COLOR"]
+        self._cross_color = draw_parameters["CROSS_COLOR"]
+        self._circle_color = draw_parameters["CIRCLE_COLOR"]
+        self._highlight_color = draw_parameters["HIGHLIGHT_COLOR"]
 
     @staticmethod
     def fill_display(display, color):
@@ -72,7 +72,7 @@ class Drawer:
         :param border_width: thickness of the border to be drawn
         """
 
-        pg.draw.rect(display, self.border_color, (0, 0, width, height), border_width // 2)
+        pg.draw.rect(display, self._border_color, (0, 0, width, height), border_width // 2)
 
     def draw_player_border(self, display, width, height, border_width, player):
         """
@@ -88,9 +88,9 @@ class Drawer:
         """
 
         if player == 1:
-            pg.draw.rect(display, self.cross_player_border_color, (0, 0, width, height), border_width // 4)
+            pg.draw.rect(display, self._cross_player_border_color, (0, 0, width, height), border_width // 4)
         else:
-            pg.draw.rect(display, self.circle_player_border_color, (0, 0, width, height), border_width // 4)
+            pg.draw.rect(display, self._circle_player_border_color, (0, 0, width, height), border_width // 4)
 
     def draw_cross(self, display, x, y):
         """
@@ -102,10 +102,10 @@ class Drawer:
         :param y: y coordinate of the center of the cross
         """
 
-        pg.draw.line(display, self.cross_color, (x - self.cross_width, y - self.cross_height),
-                     (x + self.cross_width, y + self.cross_height), width=self.cross_line_width)
-        pg.draw.line(display, self.cross_color, (x - self.cross_width, y + self.cross_height),
-                     (x + self.cross_width, y - self.cross_height), width=self.cross_line_width)
+        pg.draw.line(display, self._cross_color, (x - self._cross_width, y - self._cross_height),
+                     (x + self._cross_width, y + self._cross_height), width=self._cross_line_width)
+        pg.draw.line(display, self._cross_color, (x - self._cross_width, y + self._cross_height),
+                     (x + self._cross_width, y - self._cross_height), width=self._cross_line_width)
 
     def draw_circle(self, display, x, y):
         """
@@ -117,8 +117,8 @@ class Drawer:
         :param y: y coordinate of the center of the circle
         """
 
-        pg.draw.circle(display, self.circle_color, (x, y), self.circle_radius)
-        pg.draw.circle(display, (255, 255, 255), (x, y), self.inner_circle_radius)
+        pg.draw.circle(display, self._circle_color, (x, y), self._circle_radius)
+        pg.draw.circle(display, (255, 255, 255), (x, y), self._inner_circle_radius)
 
     def add_dot(self, display, x, y):
         """
@@ -130,7 +130,7 @@ class Drawer:
         :param y: y coordinate of the center of the dot
         """
 
-        pg.draw.circle(display, self.highlight_color, (x, y), self.dot_radius)
+        pg.draw.circle(display, self._highlight_color, (x, y), self._dot_radius)
 
     def remove_dot(self, display, x, y):
         """
@@ -142,4 +142,4 @@ class Drawer:
         :param y: y coordinate of the center of the dot
         """
 
-        pg.draw.circle(display, (255, 255, 255), (x, y), self.dot_radius)
+        pg.draw.circle(display, (255, 255, 255), (x, y), self._dot_radius)

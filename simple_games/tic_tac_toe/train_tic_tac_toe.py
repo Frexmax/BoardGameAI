@@ -4,6 +4,11 @@ from simple_games.tic_tac_toe.tic_tac_toe_parameters.tic_tac_toe_parameters impo
 
 
 def train_tic_tac_toe():
+    """
+    Entry point for training a tic-tac-toe agent.
+    Initializes the Trainer with the tic-tac-toe environment and parameters, then runs the training loop
+    """
+
     trainer = TrainerActorCriticV2(trainer_parameters, actor_critic_parameters,
                                    env_name="TIC_TAC_TOE", draw_parameters=draw_parameters,
                                    board_parameters=board_parameters)

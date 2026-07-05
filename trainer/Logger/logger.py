@@ -18,8 +18,8 @@ class Logger:
         :param env_name: name of the training environment (i.e. name of the game)
         """
 
-        self.env_name = env_name
-        self.num_items, self.load_epoch, self.load_episode, self.load_step = 0, 0, 0, 0
+        self._env_name = env_name
+        self._num_items, self._load_epoch, self._load_episode, self._load_step = 0, 0, 0, 0
         self.info = {"epochs": [0], "episodes": [0], "steps": [0], "loss_rate": [0],
                      "win_rate": [0], "loss": [0]}
 
@@ -35,15 +35,15 @@ class Logger:
         :param loss: average loss value during model training
         """
 
-        self.info["episodes"].append(episode + self.load_episode)
-        self.info["epochs"].append(epoch + self.load_epoch)
-        self.info["steps"].append(step + self.load_step)
+        self.info["episodes"].append(episode + self._load_episode)
+        self.info["epochs"].append(epoch + self._load_epoch)
+        self.info["steps"].append(step + self._load_step)
 
         self.info["loss_rate"].append(loss_rate)
         self.info["win_rate"].append(win_rate)
         self.info["loss"].append(loss)
 
-        self.num_items += 1
+        self._num_items += 1
 
     def print_log(self):
         """
@@ -101,11 +101,11 @@ class Logger:
         The file name is determined by the logged training data and month/day of training
         """
 
-        self.load_epoch = self.info["epochs"][-1]
-        self.load_episode = self.info["episodes"][-1]
-        self.load_step = self.info["steps"][-1]
+        self._load_epoch = self.info["epochs"][-1]
+        self._load_episode = self.info["episodes"][-1]
+        self._load_step = self.info["steps"][-1]
         today = date.today()
-        file_name = f"log-{self.env_name}-month-{today.month}-day-{today.day}-ep-" \
+        file_name = f"log-{self._env_name}-month-{today.month}-day-{today.day}-ep-" \
                     f"{self.info['steps'][-1]}-{self.info['win_rate'][-1]*100}%"
 
         # Save logger with the specified file name
@@ -119,4 +119,4 @@ class Logger:
 
         self.info = {"epochs": [], "episodes": [], "steps": [], "reward": [],
                      "win_rate": [], "loss": []}
-        self.num_items, self.load_epoch, self.load_episode, self.load_step = 0, 0, 0, 0
+        self._num_items, self._load_epoch, self._load_episode, self._load_step = 0, 0, 0, 0

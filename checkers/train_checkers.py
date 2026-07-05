@@ -4,6 +4,11 @@ from trainer.rl_trainer import TrainerActorCriticV2
 
 
 def train_checkers():
+    """
+    Entry point for training a checkers agent.
+    Initializes the Trainer with the checkers environment and parameters, then runs the training loop
+    """
+
     trainer = TrainerActorCriticV2(trainer_parameters, actor_critic_parameters, env_name="CHECKERS",
                                    draw_parameters=draw_parameters, board_parameters=board_parameters)
     trainer.run()

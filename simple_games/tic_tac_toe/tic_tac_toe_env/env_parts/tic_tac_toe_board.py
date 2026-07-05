@@ -38,10 +38,10 @@ class Board:
         """
 
         # Store board parameters in the class
-        self.width = board_parameters["BOARD_WIDTH"]
-        self.height = board_parameters["BOARD_HEIGHT"]
-        self.border_width = board_parameters["BORDER_WIDTH"]
-        self.line_width = board_parameters["LINE_WIDTH"]
+        self._width = board_parameters["BOARD_WIDTH"]
+        self._height = board_parameters["BOARD_HEIGHT"]
+        self._border_width = board_parameters["BORDER_WIDTH"]
+        self._line_width = board_parameters["LINE_WIDTH"]
 
         # Store the move list
         self.moves = moves
@@ -50,7 +50,7 @@ class Board:
         self.np_board = np.zeros((3, 3))
 
         # Initialize the Drawer class
-        self.drawer = Drawer(draw_parameters)
+        self._drawer = Drawer(draw_parameters)
 
         # Store the rendering flag
         self.to_render = to_render
@@ -58,20 +58,20 @@ class Board:
         if self.to_render:
             # If the board should be rendered, then calculate size of each cell
             # and the grid PyGame pixel coordinates
-            self.cell_size = ((self.width - self.border_width) // 3,
-                              (self.height - self.border_width) // 3)
-            self.centre_offset = (self.cell_size[0] * 0.5, self.cell_size[1] * 0.5)
-            self.centre_of_cells = {}
+            self.cell_size = ((self._width - self._border_width) // 3,
+                              (self._height - self._border_width) // 3)
+            self._centre_offset = (self.cell_size[0] * 0.5, self.cell_size[1] * 0.5)
+            self._centre_of_cells = {}
 
             # Initialize the PyGame Surface, on which the board will be drawn
-            self.pg_board = pg.Surface((self.width - self.border_width, self.height - self.border_width))
+            self._pg_board = pg.Surface((self._width - self._border_width, self._height - self._border_width))
         else:
             # If the board will not be rendered, then there is no need to keep any data necessary for rendering,
             # therefore the attributes can be simply assigned to None
             self.cell_size = None
-            self.centre_offset = None
-            self.centre_of_cells = None
-            self.pg_board = None
+            self._centre_offset = None
+            self._centre_of_cells = None
+            self._pg_board = None
 
     def reset(self):
         """
@@ -80,38 +80,38 @@ class Board:
         """
 
         if self.to_render:
-            self.initialize_display()
-        self.initialize_board()
+            self._initialize_display()
+        self._initialize_board()
 
-    def initialize_display(self):
+    def _initialize_display(self):
         """
         Initialize the PyGame Surface, by drawing the tic-tac-toe grid and
         calculating the center of grid cells
         """
 
-        self.drawer.fill_display(self.pg_board, self.drawer.WHITE)
+        self._drawer.fill_display(self._pg_board, self._drawer.WHITE)
 
         for x in range(3):
             for y in range(3):
                 if x != 0 and y != 0:
                     # Draw the horizontal line of a grid
                     start_coordinate_horizontal = (0, y * self.cell_size[1])
-                    end_coordinate_horizontal = (self.width, y * self.cell_size[1])
-                    self.drawer.draw_line(self.pg_board, start_coordinate_horizontal,
-                                          end_coordinate_horizontal, self.line_width, self.drawer.BLACK)
+                    end_coordinate_horizontal = (self._width, y * self.cell_size[1])
+                    self._drawer.draw_line(self._pg_board, start_coordinate_horizontal,
+                                          end_coordinate_horizontal, self._line_width, self._drawer.BLACK)
 
                     # Draw the vertical line of the grid
                     start_coordinate_vertical = (x * self.cell_size[0], 0)
-                    end_coordinate_vertical = (x * self.cell_size[0], self.height)
-                    self.drawer.draw_line(self.pg_board, start_coordinate_vertical,
-                                          end_coordinate_vertical, self.line_width, self.drawer.BLACK)
+                    end_coordinate_vertical = (x * self.cell_size[0], self._height)
+                    self._drawer.draw_line(self._pg_board, start_coordinate_vertical,
+                                          end_coordinate_vertical, self._line_width, self._drawer.BLACK)
 
                 if self.to_render:
                     # Get the centre of a given cell
-                    self.centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
+                    self._centre_of_cells[(y, x)] = (self.cell_size[1] // 2 + y * self.cell_size[1],
                                                     self.cell_size[0] // 2 + x * self.cell_size[0])
 
-    def initialize_board(self):
+    def _initialize_board(self):
         """
         Initialize NumPy board by setting all grid cells to 0
         """
@@ -130,10 +130,10 @@ class Board:
             # Set x and y PyGame coordinates from the move grid values
             # pixel x is dependent on the column of NumPy array (index 1)
             # pixel y on the row (index 0)
-            x_pixel = self.centre_of_cells[self.moves[move]][1]
-            y_pixel = self.centre_of_cells[self.moves[move]][0]
+            x_pixel = self._centre_of_cells[self.moves[move]][1]
+            y_pixel = self._centre_of_cells[self.moves[move]][0]
 
-            self.drawer.add_dot(self.pg_board, x_pixel, y_pixel)
+            self._drawer.add_dot(self._pg_board, x_pixel, y_pixel)
 
     def remove_mark(self, action_index):
         """
@@ -147,10 +147,10 @@ class Board:
             # Set x and y PyGame coordinates from the move grid values
             # pixel x is dependent on the column of NumPy array (index 1)
             # pixel y on the row (index 0)
-            x_pixel = self.centre_of_cells[self.moves[move]][1]
-            y_pixel = self.centre_of_cells[self.moves[move]][0]
+            x_pixel = self._centre_of_cells[self.moves[move]][1]
+            y_pixel = self._centre_of_cells[self.moves[move]][0]
 
-            self.drawer.remove_dot(self.pg_board, x_pixel, y_pixel)
+            self._drawer.remove_dot(self._pg_board, x_pixel, y_pixel)
 
     def render(self, player):
         """
@@ -164,15 +164,15 @@ class Board:
             pg.init()
 
             # Create display (PyGame window)
-            game_display = pg.display.set_mode((self.width, self.height))
+            game_display = pg.display.set_mode((self._width, self._height))
             pg.display.set_caption("Tic-Tac-Toe Board")
 
             # Place the board on the newly created display
-            game_display.blit(self.pg_board, self.pg_board.get_rect(center=(self.width // 2, self.height // 2)))
+            game_display.blit(self._pg_board, self._pg_board.get_rect(center=(self._width // 2, self._height // 2)))
 
             # Draw both the standard border and the player turn border
-            self.drawer.draw_border(game_display, self.width, self.height, self.border_width)
-            self.drawer.draw_player_border(game_display, self.width, self.height, self.border_width, player)
+            self._drawer.draw_border(game_display, self._width, self._height, self._border_width)
+            self._drawer.draw_player_border(game_display, self._width, self._height, self._border_width, player)
 
             # Update PyGame display after these updates
             pg.display.update()
@@ -194,12 +194,12 @@ class Board:
         x = self.moves[action][0]
         y = self.moves[action][1]
         if to_render:
-            x_pixel = self.centre_of_cells[self.moves[action]][1]
-            y_pixel = self.centre_of_cells[self.moves[action]][0]
+            x_pixel = self._centre_of_cells[self.moves[action]][1]
+            y_pixel = self._centre_of_cells[self.moves[action]][0]
             if player == 1:
-                self.drawer.draw_cross(self.pg_board, x_pixel, y_pixel)
+                self._drawer.draw_cross(self._pg_board, x_pixel, y_pixel)
             else:
-                self.drawer.draw_circle(self.pg_board, x_pixel, y_pixel)
+                self._drawer.draw_circle(self._pg_board, x_pixel, y_pixel)
         new_state = np.copy(state)
         new_state[x][y] = player
         return new_state

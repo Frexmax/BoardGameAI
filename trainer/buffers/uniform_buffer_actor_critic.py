@@ -23,18 +23,18 @@ class UniformBufferActorCritic:
         :param batch_size: number of samples to get in one batch
         """
 
-        self.buffer_counter = 0
-        self.batch_size = batch_size
+        self._buffer_counter = 0
+        self._batch_size = batch_size
 
         # Save environment info
-        self.state_shape = state_shape
-        self.action_shape = action_shape
-        self.buffer_capacity = buffer_capacity
+        self._state_shape = state_shape
+        self._action_shape = action_shape
+        self._buffer_capacity = buffer_capacity
 
         # Initialize buffer arrays
-        self.state_buffer = np.zeros((self.buffer_capacity, *state_shape), dtype=np.float32)
-        self.action_probs_buffer = np.zeros((self.buffer_capacity, self.action_shape), dtype=np.float32)
-        self.reward_buffer = np.zeros(self.buffer_capacity, dtype=np.float32)
+        self._state_buffer = np.zeros((self._buffer_capacity, *state_shape), dtype=np.float32)
+        self._action_probs_buffer = np.zeros((self._buffer_capacity, self._action_shape), dtype=np.float32)
+        self._reward_buffer = np.zeros(self._buffer_capacity, dtype=np.float32)
 
     def record(self, obs_tuple):
         """
@@ -44,13 +44,13 @@ class UniformBufferActorCritic:
         :param obs_tuple: tuple with environment information (state, action, reward)
         """
 
-        index = self.buffer_counter % self.buffer_capacity
+        index = self._buffer_counter % self._buffer_capacity
 
-        self.state_buffer[index] = obs_tuple[0]
-        self.action_probs_buffer[index] = obs_tuple[1]
-        self.reward_buffer[index] = obs_tuple[2]
+        self._state_buffer[index] = obs_tuple[0]
+        self._action_probs_buffer[index] = obs_tuple[1]
+        self._reward_buffer[index] = obs_tuple[2]
 
-        self.buffer_counter += 1
+        self._buffer_counter += 1
 
     def get_batch(self):
         """
@@ -60,15 +60,15 @@ class UniformBufferActorCritic:
         """
 
         # Calculate the possible index range
-        index_range = min(self.buffer_counter, self.buffer_capacity)
+        index_range = min(self._buffer_counter, self._buffer_capacity)
 
         # Get an array of 64 random indexes from the index range
-        batch_indexes = np.random.choice(index_range, self.batch_size)
+        batch_indexes = np.random.choice(index_range, self._batch_size)
 
         # Create an array from the respective buffers and convert them to tf tensors
-        state_tensor = tf.convert_to_tensor(self.state_buffer[batch_indexes])
-        action_probs_tensor = tf.convert_to_tensor(self.action_probs_buffer[batch_indexes])
-        reward_tensor = tf.convert_to_tensor(self.reward_buffer[batch_indexes])
+        state_tensor = tf.convert_to_tensor(self._state_buffer[batch_indexes])
+        action_probs_tensor = tf.convert_to_tensor(self._action_probs_buffer[batch_indexes])
+        reward_tensor = tf.convert_to_tensor(self._reward_buffer[batch_indexes])
         return state_tensor, action_probs_tensor, reward_tensor
 
     def create_dataset(self):
@@ -80,12 +80,12 @@ class UniformBufferActorCritic:
         """
 
         # Get the effective size of the buffer
-        end_index = min(self.buffer_capacity, self.buffer_counter)
+        end_index = min(self._buffer_capacity, self._buffer_counter)
 
         # Convert buffers to tf tensors
-        state_tensor = tf.convert_to_tensor(self.state_buffer[0:end_index])
-        action_probs_tensor = tf.convert_to_tensor(self.action_probs_buffer[0:end_index])
-        reward_tensor = tf.convert_to_tensor(self.reward_buffer[0:end_index])
+        state_tensor = tf.convert_to_tensor(self._state_buffer[0:end_index])
+        action_probs_tensor = tf.convert_to_tensor(self._action_probs_buffer[0:end_index])
+        reward_tensor = tf.convert_to_tensor(self._reward_buffer[0:end_index])
 
         # Create tf dataset from tf tensors
         dataset_state = tf.data.Dataset.from_tensor_slices(state_tensor)
@@ -100,7 +100,7 @@ class UniformBufferActorCritic:
         """
 
         today = date.today()
-        elements = np.min(self.buffer_capacity, self.buffer_counter)
+        elements = np.min(self._buffer_capacity, self._buffer_counter)
         file_name = f"buffer-uniform-month-{today.month}-day-{today.day}-elements-{elements}"
 
         # Save the buffer with the specified file name

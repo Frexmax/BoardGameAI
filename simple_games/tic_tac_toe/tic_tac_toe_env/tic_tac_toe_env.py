@@ -28,14 +28,14 @@ class TicTacToeEnv:
         # The starting player is set to 1, the second (enemy) set to -1
         # The values of player and enemy interchange, depending on who is about to play
         self.player = 1
-        self.enemy = -1
+        self._enemy = -1
 
         # Amount of pieces you need connected to win
-        self.piece_count_for_win = 3
+        self._piece_count_for_win = 3
 
         # Information used for reinforcement learning
         # observation space - dimensions of the game state
-        self.observation_space = (3, 3)
+        self._observation_space = (3, 3)
         # refactored space - modified game state used for model training
         self.refactored_space = (2, 3, 3)
         # action space - number of possible actions
@@ -91,7 +91,7 @@ class TicTacToeEnv:
 
         self.move_counter = 0
         self.player = 1
-        self.enemy = -1
+        self._enemy = -1
         self.board.reset()
         return np.copy(self.board.np_board), self.find_moves(self.board.np_board, 1, positions=None)
 
@@ -136,7 +136,7 @@ class TicTacToeEnv:
             for y in range(3):
                 if state[x, y] == 0:
                     moves.append((x, y))
-        return self.filter_moves(moves)
+        return self._filter_moves(moves)
 
     @staticmethod
     def hash_state(state):
@@ -156,7 +156,7 @@ class TicTacToeEnv:
         hash_value = hash(array)
         return hash_value
 
-    def filter_moves(self, moves):
+    def _filter_moves(self, moves):
         """
         Map every move from the provided list of moves
         to the corresponding index in the game's list of all moves
@@ -184,7 +184,7 @@ class TicTacToeEnv:
 
         return self.board.make_move(state, action, player, to_render=None)
 
-    def check_win(self, state, player):
+    def _check_win(self, state, player):
         """
         Check for game win for the last player based on the provided game state.
         5 conditions checked:
@@ -203,28 +203,28 @@ class TicTacToeEnv:
 
         # 1. Check if row filled by player
         for x in range(3):
-            if np.count_nonzero(state[x] == player) == self.piece_count_for_win:
+            if np.count_nonzero(state[x] == player) == self._piece_count_for_win:
                 win_state = player
                 return True, win_state
 
         # 2. Check if column filled by player
         for y in range(3):
-            if np.count_nonzero(state[:, y] == player) == self.piece_count_for_win:
+            if np.count_nonzero(state[:, y] == player) == self._piece_count_for_win:
                 win_state = player
                 return True, win_state
 
         # 3. Check if descending diagonal filled by player
-        if np.count_nonzero(np.array([state[0, 0], state[1, 1], state[2, 2]]) == player) == self.piece_count_for_win:
+        if np.count_nonzero(np.array([state[0, 0], state[1, 1], state[2, 2]]) == player) == self._piece_count_for_win:
             win_state = player
             return True, win_state
 
         # 4. Check if ascending diagonal filled by player
-        if np.count_nonzero(np.array([state[0, 2], state[1, 1], state[2, 0]]) == player) == self.piece_count_for_win:
+        if np.count_nonzero(np.array([state[0, 2], state[1, 1], state[2, 0]]) == player) == self._piece_count_for_win:
             win_state = player
             return True, win_state
 
         # 5. Check if the board is full
-        if np.count_nonzero(state != 0) == self.observation_space[0] * self.observation_space[1]:
+        if np.count_nonzero(state != 0) == self._observation_space[0] * self._observation_space[1]:
             win_state = 0
             return True, win_state
         return False, win_state
@@ -240,8 +240,8 @@ class TicTacToeEnv:
         :return: reward for the state, boolean indicating game over, moves possible for the state
         """
 
-        game_end, win_state = self.check_win(state, player)
-        reward = self.give_reward(win_state)
+        game_end, win_state = self._check_win(state, player)
+        reward = self._give_reward(win_state)
         next_actions = self.find_moves(state, player, positions=None)
         return reward, game_end, next_actions
 
@@ -266,7 +266,7 @@ class TicTacToeEnv:
         return np.expand_dims(refactored_state, axis=0)
 
     @staticmethod
-    def flip_board_perspective(state, player):
+    def _flip_board_perspective(state, player):
         """
         Create a new state with a flipped player perspective.
         Previous 1's become -1, and vice versa.
@@ -279,7 +279,7 @@ class TicTacToeEnv:
         return deepcopy(state) * player
 
     @staticmethod
-    def string_representation(state):
+    def _string_representation(state):
         """
         Convert the game state array to a string
 
@@ -290,7 +290,7 @@ class TicTacToeEnv:
         return np.array2string(state)
 
     @staticmethod
-    def give_reward(win_state):
+    def _give_reward(win_state):
         """
         Grant reward based on the winner of the game (1 or -1),
         if no winner, then there is no reward
@@ -322,16 +322,16 @@ class TicTacToeEnv:
         next_actions = self.find_moves(self.board.np_board, self.player, positions=None)
 
         # Check if game over and who may have won, after making the provided move
-        game_end, win_state = self.check_win(self.board.np_board, self.player)
+        game_end, win_state = self._check_win(self.board.np_board, self.player)
 
         # Give the reward for the move
-        reward = self.give_reward(win_state)
+        reward = self._give_reward(win_state)
 
         # Update move counter, after move is made
         self.move_counter += 1
 
         # Swap the player and enemy values, for next turn (as the player making move switches)
         self.player *= -1
-        self.enemy *= -1
+        self._enemy *= -1
 
         return np.copy(self.board.np_board), reward, game_end, next_actions

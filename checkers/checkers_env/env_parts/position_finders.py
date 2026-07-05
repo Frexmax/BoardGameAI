@@ -42,6 +42,17 @@ def valid_capture(np_board, capture_pos, future_pos, player):
 
 
 def piece_future_positions(np_board, x, y, player):
+    """
+    Find the possible non-capturing move positions for a regular piece at the given position.
+    Regular pieces can only move diagonally forward, in the direction depending on the player
+
+    :param np_board: state of the game board as a numpy array
+    :param x: x coordinate of the piece
+    :param y: y coordinate of the piece
+    :param player: player the piece belongs to
+    :return: list of valid future positions for the piece
+    """
+
     future_positions = []
     directions_red = [(-1, -1), (-1, 1)]
     directions_black = [(1, 1), (1, -1)]
@@ -58,6 +69,16 @@ def piece_future_positions(np_board, x, y, player):
 
 
 def king_future_positions(np_board, x, y):
+    """
+    Find the possible non-capturing move positions for a king at the given position.
+    Unlike regular pieces, kings can move diagonally in any of the 4 directions
+
+    :param np_board: state of the game board as a numpy array
+    :param x: x coordinate of the king
+    :param y: y coordinate of the king
+    :return: list of valid future positions for the king
+    """
+
     future_positions = []
     directions = [(-1, -1), (-1, 1), (1, 1), (1, -1)]
     for direction in directions:
@@ -69,6 +90,19 @@ def king_future_positions(np_board, x, y):
 
 
 def get_captures(np_board, start_pos, player, piece_type):
+    """
+    Find all the possible capturing moves (including chained multi-captures) starting from the given position.
+    Every possible capture sequence is explored breadth-first, and any sequence that is a strict prefix
+    of a longer available sequence is discarded, since captures must be continued as far as possible
+
+    :param np_board: state of the game board as a numpy array
+    :param start_pos: starting position of the piece or king performing the capture
+    :param player: player the piece or king belongs to
+    :param piece_type: type of the piece performing the capture (regular piece or king)
+    :return: list of capture move sequences (each a tuple of positions visited), list of the corresponding
+             sequences of captured enemy positions
+    """
+
     directions_red = [(-1, -1), (-1, 1)]
     directions_black = [(1, 1), (1, -1)]
     directions_king = [(-1, -1), (-1, 1), (1, 1), (1, -1)]

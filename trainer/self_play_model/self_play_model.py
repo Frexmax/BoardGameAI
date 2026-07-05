@@ -21,7 +21,7 @@ class SelfPlayModel:
         :param file_name: path to the file where the self-play model is stored
         """
 
-        self.model = load_model(file_name)
+        self._model = load_model(file_name)
 
     def predict(self, observations):
         """
@@ -33,7 +33,7 @@ class SelfPlayModel:
         """
 
         with device('/cpu:0'):
-            return predict(self.model, observations)
+            return predict(self._model, observations)
 
     def set_weights(self, model_weights):
         """
@@ -42,7 +42,7 @@ class SelfPlayModel:
         :param model_weights: weights of the another model to copied
         """
 
-        self.model.set_weights(model_weights)
+        self._model.set_weights(model_weights)
 
     def get_weights(self):
         """
@@ -51,4 +51,4 @@ class SelfPlayModel:
         :return: the weights of this model's layers
         """
 
-        return self.model.get_weights()
+        return self._model.get_weights()

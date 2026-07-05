@@ -12,6 +12,18 @@ from trainer.monte_carlo_tree_search.monte_carlo_tree_search import MonteCarloTr
 
 
 def test_checkers(human, episodes, num_simulations, ai_player, heuristic_weight, model_name):
+    """
+    Play a number of checkers games against a trained model, either as a human (using mouse controls)
+    or a random agent, with the model's moves chosen using Monte-Carlo-Tree Search
+
+    :param human: flag whether the non-AI player is controlled by a human (mouse clicks) or plays randomly
+    :param episodes: number of games to play
+    :param num_simulations: number of simulation steps to be run in the Monte-Carlo-Tree Search
+    :param ai_player: which player (1 or -1) is controlled by the trained model
+    :param heuristic_weight: weight the heuristics are assigned in the Monte-Carlo-Tree Search
+    :param model_name: filename of the trained model to load
+    """
+
     env = CheckersEnv(board_parameters, draw_parameters, to_render=True)
     model = SelfPlayModel(f"./checkers/saved_models/{model_name}")
     for episode in range(episodes):
